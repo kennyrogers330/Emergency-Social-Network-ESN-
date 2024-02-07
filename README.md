@@ -30,6 +30,7 @@ npm install
 npm start
 ```
 
+<br>
 Follw below steps to run the backend application:
 
 ```bash
@@ -44,5 +45,15 @@ npm start
 After the backend application has started successfully, the API documentation is accessible on:
 
 ```
-http://<IP>:3000/api-docs or http:localhost:3000/api-docs
+http://<IP>:3000/api-docs or http://localhost:3000/api-docs
 ```
+
+This is the [ArchitectureHaiku](Paste the link to the document here) of the application.
+
+These are the [AnalysisClasses](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
+
+These are the [SequenceDiagrams](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
+
+These are the [ClassDiagrams](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
+
+This is a [MappingTable](Paste the link to the document here) between analysis classes and implementation elements for use cases `Join a community` and `Chat Publicly`.
