@@ -15,11 +15,22 @@ This is your team's repo for the ESN Application, the group project conducted in
 - YOUR GITHUB PROFILE MUST BE PUBLIC AND SHOULD HAVE YOUR FULL NAME AND RECOGNIZABLE HEADSHOT PHOTO.
 - MAKE SURE TO CHECK AND UPDATE YOUR LOCAL GIT CONFIGURATION IN ORDER TO MATCH YOUR LOCAL GIT CREDENTIALS TO YOUR SE-PROJECT GITHUB CREDENTIALS (COMMIT USING YOUR ANDREW EMAIL ASSOCIATED WITH YOUR GITHUB ACCOUNT): OTHERWISE YOUR COMMITS MAY BE EXCLUDED FROM GITHUB STATISTICS AND REPO AUDITS WILL UNDERESTIMATE YOUR CONTRIBUTION.
 
-<!-- # Documentation
+# Notes
+
+This application is made of the frontend and the backend application. The frontend code are in the `frontend` folder and the backend code are in the `backend` folder.
 
 ## Getting Started
 
-Bollow below steps to run the application:
+Follw below steps to run the frontend application:
+
+```bash
+git clone git@github.com:cmusv-fse2/fse-rw-s24-rw1.git   // This requires SSH keys already setup.
+cd fse-rw-s24-rw1/frontend
+npm install
+npm start
+```
+
+Follw below steps to run the backend application:
 
 ```bash
 git clone git@github.com:cmusv-fse2/fse-rw-s24-rw1.git   // This requires SSH keys already setup.
@@ -28,10 +39,10 @@ npm install
 npm start
 ```
 
-## Backend Documentation
+## Documentation
 
 After the backend application has started successfully, the API documentation is accessible on:
 
 ```
 http://<IP>:3000/api-docs or http:localhost:3000/api-docs
-``` -->
+```
