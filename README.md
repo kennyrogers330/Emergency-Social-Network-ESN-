@@ -52,7 +52,7 @@ This is the [ArchitectureHaiku](Paste the link to the document here) of the appl
 
 These are the [AnalysisClasses](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
 
-These are the [SequenceDiagrams](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
+These are the [SequenceDiagrams](https://app.diagrams.net/#G1lXs2WJEqjp4hDdj-p7GVVk-tciOKSzhs) for use cases `Join a community` and `Chat Publicly`.
 
 These are the [ClassDiagrams](Paste the link to the document here) for use cases `Join a community` and `Chat Publicly`.
 
