@@ -45,5 +45,9 @@
     "eslint-plugin-react": "^7.33.2",
     "husky": "^9.0.10",
     "lint-staged": "^15.2.2"
+  },
+  "lint-staged": {
+    "*.js": "npm run lint",
+    "*.{js,css,md,html,json}": "npm run format"
   }
 }
