@@ -42,7 +42,7 @@ npm start
 
 ## Documentation
 
-After the backend application has started successfully, the API documentation is accessible on:
+After the backend application has started, the API documentation is accessible on:
 
 ```
 http://<IP>:3000/api-docs or http://localhost:3000/api-docs
