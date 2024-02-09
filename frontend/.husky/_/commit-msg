@@ -1,2 +1,9 @@
 #!/usr/bin/env sh
-. "${0%/*}/h"
+
+cd frontend
+
+echo '📝👷 Please wait checking your commit message'
+
+npx commitlint --edit
+
+

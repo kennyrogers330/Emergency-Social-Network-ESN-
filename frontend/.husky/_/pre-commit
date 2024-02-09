@@ -1,2 +1,16 @@
 #!/usr/bin/env sh
-. "${0%/*}/h"
+
+cd frontend
+
+echo '🏗️👷 Please wait styling, testing and building your work before committing'
+
+# Check ESLint Standards
+npm run lint ||
+(
+        echo '😤 ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)
+
+
+# If everything passes... Now we can commit
+echo '✅ Everything is good... Commiting code in a few 🚀✅'
