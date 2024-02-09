@@ -1,4 +1,2 @@
 #!/usr/bin/env sh
-
-cd frontend
-npm run lint
+. "${0%/*}/h"
