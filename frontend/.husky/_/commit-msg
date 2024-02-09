@@ -1,4 +1,2 @@
 #!/usr/bin/env sh
-
-cd frontend
-npx --no-install commitlint --edit
+. "${0%/*}/h"
