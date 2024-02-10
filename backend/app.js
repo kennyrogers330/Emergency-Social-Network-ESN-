@@ -1,18 +1,14 @@
-
-import express from 'express';
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
-import { swaggerOptions } from './swagger.js';
+const express = require("express");
+const morgan = require("morgan");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const { swaggerOptions } = require("./swagger");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
 // Swagger setup
 const specs = swaggerJsdoc(swaggerOptions);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;
