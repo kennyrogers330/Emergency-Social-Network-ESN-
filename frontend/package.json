@@ -23,7 +23,7 @@
     "check-format": "prettier --check",
     "lint": "eslint \"src/**/*.{js,jsx}\"",
     "lint:fix": "eslint \"src/**/*.{js,jsx}\" --fix",
-    "prepare": "cd .. && frontend/.husky"
+    "prepare": "cd .. && husky frontend"
   },
   "eslintConfig": {
     "extends": [
