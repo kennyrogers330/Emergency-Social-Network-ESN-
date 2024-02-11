@@ -6,6 +6,7 @@
 
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
+import Chat from "../models/chatModel.js";
 
 // const joinCommunity = (req, res) => {
 //     let username = req.body[0].username
@@ -52,7 +53,8 @@ import bcrypt from "bcryptjs";
 
 export const joinCommunity = (req, res) => {
   let username = req.body[0].username
-  let password = req.body[0].password 
+  let password = req.body[0].password
+  let responseData = {}
   
   // Check if the user already exists in the database
   User.findOne({ username: username })
@@ -63,13 +65,30 @@ export const joinCommunity = (req, res) => {
                       if (match) {
                           User.findOneAndUpdate({ username: username },  { $set: { status: "Online" } })
                               .then(() => {
-                                  console.log("Status set")
-                                  res.status(200).json({ message: 'Existing Login successful', userDB })
+                                  // res.status(200).json({ message: 'Existing Login successful', userDB })
+                                  responseData.loggedIn = userDB
                               })
                               .catch(err => {
                                   console.error("Error updating user status:", err);
                                   res.status(500).json({ message: "Internal Server Error" });
                               })
+                          Chat.find()
+                              .then(charts => {
+                                  responseData.charts = charts
+                              })
+                              .catch (error => {
+                                  console.log(error);
+                                  res.status(500).send("Internal Server Error");
+                                })
+                          User.find()
+                              .then(users => {
+                                 responseData.users = users
+                                 res.status(200).json({ message: 'Existing Login successful', responseData })
+                                })
+                                .catch (error => {
+                                    console.log(error);
+                                    res.status(500).send("Internal Server Error");
+                                  })
                       } else {
                           console.log("Wrong Password");
                           res.status(400).json({ message: 'Wrong Password' });
