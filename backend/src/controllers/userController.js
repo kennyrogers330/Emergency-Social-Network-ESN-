@@ -1,55 +1,7 @@
-// exports.joinCommunity = (req, res) => {
-//   console.log("User registered successfully");
-//   res.send("User registered successfully");
-// };
-
 
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import Chat from "../models/chatModel.js";
-
-// const joinCommunity = (req, res) => {
-//     let username = req.body[0].username
-//     let password = req.body[0].password 
-//     // let { username, password } = req.body;
-//     // Check if the user already exists in the database
-//     User.findOne({ username: username })
-//         .then(userDB => {
-//             if (userDB) {
-//               bcrypt.compare(password, userDB.password)
-//                 .then(match => {
-//                     if (match) {
-//                       User.findOneAndUpdate({ username: username },  { $set: { status: "Online" } })
-//                         .then(() => {
-//                           console.log("Status set")
-//                           return res.status(200).json({ message: 'Existing Login successful', userDB })
-//                         })
-//                     } else {
-//                       // return res.status(400).json({ message: 'Wrong Password' })   
-//                       console.log("Error")               
-
-//                     }
-//                 })
-//                 .catch(err => {
-//                     done(err)
-//                 })                
-//             }
-            
-//             // Register the user if not found in the database.            
-//             bcrypt.hash(password, 12)
-//                 .then(password => {
-//                     User.create({ username, password, status: "Online" })
-//                 })
-//                 .then(newUser => {
-//                     return res.status(200).json({ message: 'New Login successful', userDB })                          
-//                 })
-//         })
-//         .catch(error => {
-//             console.error("Error during registration:", error);
-//             res.status(500).send({ message: "Internal Server Error" });
-//         });
-// }
-
 
 export const joinCommunity = (req, res) => {
   let username = req.body[0].username
@@ -104,12 +56,30 @@ export const joinCommunity = (req, res) => {
                   .then(hashedPassword => {
                       User.create({ username, password: hashedPassword, status: "Online" })
                           .then(newUser => {
-                              res.status(200).json({ message: 'New Login successful', newUser });
+                              // res.status(200).json({ message: 'New Login successful', newUser });
+                              responseData.loggedIn = newUser
                           })
                           .catch(err => {
                               console.error("Error creating new user:", err);
                               res.status(500).json({ message: "Internal Server Error" });
-                          });
+                          })
+                      Chat.find()
+                          .then(charts => {
+                              responseData.charts = charts
+                            })
+                          .catch (error => {
+                              console.log(error);
+                              res.status(500).send("Internal Server Error");
+                            })
+                      User.find()
+                          .then(users => {
+                              responseData.users = users
+                              res.status(200).json({ message: 'Existing Login successful', responseData })
+                                })
+                          .catch (error => {
+                              console.log(error);
+                              res.status(500).send("Internal Server Error");
+                            })
                   })
                   .catch(err => {
                       console.error("Error hashing password:", err);

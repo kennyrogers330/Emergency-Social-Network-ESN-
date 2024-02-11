@@ -11,8 +11,6 @@ import session from "express-session";
 import connectMongoDBSession from "connect-mongodb-session";
 import router from "./src/routes/routes.js";
 
-// const passport = require(path.join(rootDirectory, "src", "middlewares", "passport-config")); 
-
 const app = express();
 
 import { createServer } from "http";
