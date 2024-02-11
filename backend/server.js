@@ -1,10 +1,9 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+import dotenv from "dotenv";
 
 dotenv.config({ path: "./config.env" });
 
-const app = require("./app");
-const connectDb = require("./src/config/dbConnection");
+import app from "./app.js";
+import connectDb from "./src/config/dbConnection.js";
 
 connectDb();
 const port = process.env.PORT || 3000;

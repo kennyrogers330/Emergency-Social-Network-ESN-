@@ -40,6 +40,7 @@
  *            type: string
  */
 
+
 /**
  * @swagger
  * tags:
@@ -180,8 +181,14 @@
  *                type: object
  */
 
-const express = require("express");
-
+import express from "express";
 const router = express.Router();
+// const passport = require('../middlewares/passport-config');
+
+import {joinCommunity, getCitizens} from "../controllers/userController.js";
+
+// Handle register
+router.post("/citizens", joinCommunity);
+router.get("/citizens", getCitizens)
 
 export default router;
