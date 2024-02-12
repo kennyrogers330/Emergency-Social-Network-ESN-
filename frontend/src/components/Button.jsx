@@ -7,17 +7,24 @@ const sizeClasses = {
   large: 'text-lg p-6 font-medium',
 };
 
-const variationClasses = {
-  primary: 'bg-blue-500',
-  secondary: 'bg-yellow-100',
-  danger: 'text-red-100 bg-red-700 hover:bg-red-800',
-};
-
-const Button = ({ children, size, variation, ...props }) => {
-  const buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]} ${variationClasses[variation]}`;
-
+const Button = ({
+  children,
+  size,
+  backgroundColor,
+  textColor,
+  hoverBackgroundColor,
+  ...props
+}) => {
+  const buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]}`;
+  const style = {
+    backgroundColor,
+    color: textColor,
+    ...(hoverBackgroundColor
+      ? { ':hover': { backgroundColor: hoverBackgroundColor } }
+      : {}),
+  };
   return (
-    <button className={buttonClasses} {...props}>
+    <button className={buttonClasses} style={style} {...props}>
       {children}
     </button>
   );
@@ -27,13 +34,16 @@ const Button = ({ children, size, variation, ...props }) => {
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  variation: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
+  hoverBackgroundColor: PropTypes.string,
 };
 
 // Define defaultProps
 Button.defaultProps = {
   size: 'medium',
-  variation: 'primary',
+  backgroundColor: 'bg-blue-500',
+  textColor: 'text-white',
 };
 
 export default Button;

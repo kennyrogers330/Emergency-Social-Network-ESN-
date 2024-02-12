@@ -8,6 +8,9 @@ function Dashboard() {
       <Button variation="secondary" size="large">
         Large Button
       </Button>
+      <Button variation="danger" size="small">
+        Small Button
+      </Button>
     </>
   );
 }
