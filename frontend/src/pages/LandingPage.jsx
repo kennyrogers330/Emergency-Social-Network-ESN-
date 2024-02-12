@@ -1,40 +1,64 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="h-screen w-screen bg-white flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
-      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <section className="h-screen w-screen bg-white flex flex-col sm:flex-row min-h-0 min-w-0 overflow-hidden">
+      <nav className="bg-white fixed w-full z-20 top-0 border-b">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a
-            href="https://flowbite.com/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
+            href="https://res.cloudinary.com/dcpjf6uns/image/upload/v1707620915/Logo_llf7pi.png"
+            className="flex items-center space-x-3"
           >
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
+              src="https://res.cloudinary.com/dcpjf6uns/image/upload/v1707620915/Logo_llf7pi.png"
+              className="h-10"
+              alt="ESN Logo"
             />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              Flowbite
-            </span>
           </a>
-          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+          <div className="flex md:order-2 space-x-3">
             <button
               type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => navigate('/login')}
+              className="text-white bg-colorBluePrimary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
             >
               Get started
             </button>
           </div>
         </div>
       </nav>
-      <section className="bg-slate-white h-full w-screen flex-1">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto pt-24">
-          <div className="bg-red-500 w-1/2 h-full flex">
-            <h2>Heloooooooo</h2>
+      <section className="bg-white h-full w-screen flex-1 overflow-auto">
+        <div className="max-w-screen-xl flex flex-col md:flex-row flex-wrap items-center justify-between mx-auto pt-24">
+          <div className="w-full md:w-1/2 h-full flex items-center justify-center">
+            <div className="flex flex-col justify-between items-start pt-8">
+              <div className="flex flex-col justify-between">
+                <h1 className="font-bold text-gray-700 text-wrap text-6xl">
+                  Stay Alert With The Emergency Social Network
+                </h1>
+                <p className="text-gray-400 mt-4 text-2xl">
+                  Dedicated to keep you informed in case of emergencies with
+                  respect to incidences in the neighbor hood.
+                </p>
+              </div>
+              <div className="mt-8">
+                <button
+                  type="button"
+                  onClick={() => navigate('/login')}
+                  className="text-white bg-colorBluePrimary hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+                >
+                  Join the Community
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="bg-blue-500">
-            <h2>Heloooooooo</h2>
+          <div className="w-full md:w-1/2 h-full items-start">
+            <img
+              alt="Hero"
+              className="w-full h-auto object-contain"
+              src="https://res.cloudinary.com/dcpjf6uns/image/upload/v1707658444/Group_3_vj9njk.png"
+            />
           </div>
         </div>
       </section>
