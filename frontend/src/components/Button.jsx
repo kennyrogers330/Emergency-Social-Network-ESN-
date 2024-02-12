@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const sizeClasses = {
-  small: 'text-sm p-1 uppercase font-semibold text-center',
-  medium: 'text-base p-4 font-medium',
-  large: 'text-lg p-6 font-medium',
+  small: 'text-sm p-1 uppercase text-center',
+  medium: 'text-base px-3 py-2 font-medium',
+  large: 'text-lg px-6 py-3 font-medium',
 };
 
 const Button = ({
@@ -13,37 +13,35 @@ const Button = ({
   backgroundColor,
   textColor,
   hoverBackgroundColor,
+  className,
   ...props
 }) => {
-  const buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]}`;
-  const style = {
-    backgroundColor,
-    color: textColor,
-    ...(hoverBackgroundColor
-      ? { ':hover': { backgroundColor: hoverBackgroundColor } }
-      : {}),
-  };
+  let buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]} ${backgroundColor} ${textColor} ${className}`;
+  if (hoverBackgroundColor) {
+    buttonClasses += ` hover:${hoverBackgroundColor}`;
+  }
+
   return (
-    <button className={buttonClasses} style={style} {...props}>
+    <button className={buttonClasses} {...props}>
       {children}
     </button>
   );
 };
 
-// Define propTypes
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   backgroundColor: PropTypes.string,
   textColor: PropTypes.string,
   hoverBackgroundColor: PropTypes.string,
+  className: PropTypes.string,
 };
 
-// Define defaultProps
 Button.defaultProps = {
   size: 'medium',
-  backgroundColor: 'bg-blue-500',
+  backgroundColor: 'bg-colorBluePrimary',
   textColor: 'text-white',
+  className: '',
 };
 
 export default Button;
