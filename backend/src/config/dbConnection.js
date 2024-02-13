@@ -2,7 +2,10 @@ import mongoose from "mongoose";
 
 const connectDb = async () => {
   try {
-    const connect = await mongoose.connect(process.env.CONNECTION_STRING, {});
+    const connect = await mongoose.connect(
+      process.env.CONNECTION_STRING.replace("true ", "true"),
+      {}
+    );
     console.log(
       "Database connected",
       connect.connection.host,
@@ -14,5 +17,4 @@ const connectDb = async () => {
   }
 };
 
-// module.exports = connectDb;
 export default connectDb;

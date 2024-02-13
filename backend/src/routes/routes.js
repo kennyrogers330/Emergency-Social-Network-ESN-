@@ -9,8 +9,6 @@
  *            type: string
  *          username:
  *            type: string
- *          password:
- *            type: string
  *          status:
  *            type: string
  *      ApiJoinCommunity:
@@ -20,6 +18,15 @@
  *            type: string
  *          password:
  *            type: string
+ *      ApiJoinCommunityResponse:
+ *        type: object
+ *        properties:
+ *          status:
+ *            type: string
+ *          token:
+ *            type: string
+ *          user:
+ *            type: object
  *      ApiChat:
  *        type: object
  *        properties:
@@ -63,10 +70,25 @@
 
 /**
  * @swagger
- * /citizens:
+ * /api/v1/citizens:
  *    get:
  *      summary: Get all citizens. After joining the community, citizens can see themself listed in the directory, along with other citizens.
  *      tags: [Citizens]
+ *      parameters:
+ *       - name: sort
+ *         in: path
+ *         description: Sort the results by status and username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: -status,username
+ *       - name: fields
+ *         in: path 
+ *         description: Specify which fields to include in the response
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: username,status
  *      responses:
  *         200:
  *           description: A list of Citizens
@@ -227,10 +249,10 @@ import express from "express";
 const router = express.Router();
 // const passport = require('../middlewares/passport-config');
 
-import {joinCommunity, getCitizens} from "../controllers/userController.js";
+// import {joinCommunity, getCitizens} from "../controllers/userController.js";
 
-// Handle register
-router.post("/citizens", joinCommunity);
-router.get("/citizens", getCitizens)
+// // Handle register
+// router.post("/citizens", joinCommunity);
+// router.get("/citizens", getCitizens)
 
 export default router;

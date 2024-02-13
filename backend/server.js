@@ -1,9 +1,10 @@
+import mongoose from "mongoose";
 import dotenv from "dotenv";
+import app from "./app.js";
+import connectDb from "./src/config/dbConnection.js";
+import httpServer from "./app.js";
 
 dotenv.config({ path: "./config.env" });
-
-import httpServer from "./app.js";
-import connectDb from "./src/config/dbConnection.js";
 
 connectDb();
 const port = process.env.PORT || 3000;
