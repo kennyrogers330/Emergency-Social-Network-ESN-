@@ -1,21 +1,30 @@
-import Member from '../components/Dashboard/MembersDirectory.jsx';
-import Messages from '../components/Dashboard/Messages.jsx';
+import { toast } from 'react-hot-toast';
+import Button from './../components/Button.jsx';
+import Input from './../components/Input.jsx';
+
+const notify = () => toast.error('Here is a toaster');
+
 function Dashboard() {
   return (
     <>
-      <div className="container mx-auto">
-        <div className="flex flex-nowrap">
-          <div className="basis-1/4 border-2 border-rose-600">
-            <Messages></Messages>
-          </div>
-          <div className="basis-6/12">
-            <Member></Member>
-          </div>
-          <div className="basis-1/4">
-            <Member></Member>
-          </div>
-        </div>
-      </div>
+      <h1>Start of the project.</h1>
+      <Button>Button</Button>
+      <Button
+        size="large"
+        backgroundColor={`bg-colorBluePrimary`}
+        hoverBackgroundColor={`bg-red-100`}
+        textColor={`text-red-300`}
+      >
+        Large Button
+      </Button>
+      <Button size="small">Small Button</Button>
+      <Button onClick={notify}>Click to Toast</Button>
+      <Input
+        label="Label"
+        details="details"
+        placeholder="Placeholder"
+        error="something wrong"
+      />
     </>
   );
 }

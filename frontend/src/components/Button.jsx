@@ -2,19 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const sizeClasses = {
-  small: 'text-sm p-1 uppercase font-semibold text-center',
-  medium: 'text-base p-4 font-medium',
-  large: 'text-lg p-6 font-medium',
+  small: 'text-sm p-1 uppercase text-center',
+  medium: 'text-base px-3 py-2 font-medium',
+  large: 'text-lg px-6 py-3 font-medium',
 };
 
-const variationClasses = {
-  primary: 'bg-blue-500',
-  secondary: 'bg-yellow-100',
-  danger: 'text-red-100 bg-red-700 hover:bg-red-800',
-};
-
-const Button = ({ children, size, variation, ...props }) => {
-  const buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]} ${variationClasses[variation]}`;
+const Button = ({
+  children,
+  size,
+  backgroundColor,
+  textColor,
+  hoverBackgroundColor,
+  className,
+  ...props
+}) => {
+  let buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]} ${backgroundColor} ${textColor} ${className}`;
+  if (hoverBackgroundColor) {
+    buttonClasses += ` hover:${hoverBackgroundColor}`;
+  }
 
   return (
     <button className={buttonClasses} {...props}>
@@ -23,17 +28,20 @@ const Button = ({ children, size, variation, ...props }) => {
   );
 };
 
-// Define propTypes
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  variation: PropTypes.oneOf(['primary', 'secondary', 'danger']),
+  backgroundColor: PropTypes.string,
+  textColor: PropTypes.string,
+  hoverBackgroundColor: PropTypes.string,
+  className: PropTypes.string,
 };
 
-// Define defaultProps
 Button.defaultProps = {
   size: 'medium',
-  variation: 'primary',
+  backgroundColor: 'bg-colorBluePrimary',
+  textColor: 'text-white',
+  className: '',
 };
 
 export default Button;
