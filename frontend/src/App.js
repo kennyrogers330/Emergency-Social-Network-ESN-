@@ -3,14 +3,15 @@ import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import { Toaster } from 'react-hot-toast';
+import LandingPage from './pages/LandingPage.jsx';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Navigate replace to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route index element={<Navigate replace to="welcome" />} />
+          <Route path="welcome" element={<LandingPage />} />
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
