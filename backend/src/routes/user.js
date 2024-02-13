@@ -68,6 +68,21 @@
  *    get:
  *      summary: Get all citizens. After joining the community, citizens can see themself listed in the directory, along with other citizens.
  *      tags: [Citizens]
+ *      parameters:
+ *       - name: sort
+ *         in: path
+ *         description: Sort the results by status and username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: -status,username
+ *       - name: fields
+ *         in: path 
+ *         description: Specify which fields to include in the response
+ *         required: true
+ *         schema:
+ *           type: string
+ *         example: username,status
  *      responses:
  *         200:
  *           description: A list of Citizens
