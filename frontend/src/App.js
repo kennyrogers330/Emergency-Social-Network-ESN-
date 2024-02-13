@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Login from './pages/Login.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import { Toaster } from 'react-hot-toast';
+import DashboardLayout from './layout/DashboardLayout.js';
 
 function App() {
   return (
@@ -10,7 +11,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route index element={<Navigate replace to="dashboard" />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route
+            key="key__dashboard"
+            path="/dashboard"
+            element={<DashboardLayout />}
+          >
+            <Route index element={<Dashboard />} />
+          </Route>
+          {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="login" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
