@@ -11,8 +11,6 @@
  *            type: string
  *          status:
  *            type: string
- *          status:
- *            type: string
  *      ApiJoinCommunity:
  *        type: object
  *        properties:
@@ -251,10 +249,10 @@ import express from "express";
 const router = express.Router();
 // const passport = require('../middlewares/passport-config');
 
-import {joinCommunity, getCitizens} from "../controllers/userController.js";
+// import {joinCommunity, getCitizens} from "../controllers/userController.js";
 
-// Handle register
-router.post("/citizens", joinCommunity);
-router.get("/citizens", getCitizens)
+// // Handle register
+// router.post("/citizens", joinCommunity);
+// router.get("/citizens", getCitizens)
 
 export default router;

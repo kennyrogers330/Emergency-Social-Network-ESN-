@@ -23,4 +23,4 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use("/api/v1", citizeRouter);
 
-export default app;
+export default httpServer;
