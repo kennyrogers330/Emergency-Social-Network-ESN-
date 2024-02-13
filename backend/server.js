@@ -8,6 +8,6 @@ dotenv.config({ path: "./config.env" });
 connectDb();
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });

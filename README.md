@@ -58,5 +58,4 @@ These are the [ClassDiagrams](https://docs.google.com/document/d/1VFcpOEG1Exxgjf
 
 This is a [MappingTable](https://docs.google.com/document/d/1jW3Y2eGU3pfw1l2bJHaQQbDvnIDXfb0PcHG6AtToKjE/edit?usp=drivesdk) between analysis classes and implementation elements for use cases `Join a community` and `Chat Publicly`.
 
-This [Design Files](https://www.figma.com/files/project/202268947/FSE-RW1?fuid=984761051782459304). This will have both `Components` and `Entire Design Of the Project` 
-
+This [Design Files](https://www.figma.com/files/project/202268947/FSE-RW1?fuid=984761051782459304). This will have both `Components` and `Entire Design Of the Project`

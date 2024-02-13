@@ -7,6 +7,12 @@ import citizeRouter from "./src/middlewares/citizenRoutes.js";
 
 const app = express();
 
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
 app.use(express.json());
 
 // Swagger setup
