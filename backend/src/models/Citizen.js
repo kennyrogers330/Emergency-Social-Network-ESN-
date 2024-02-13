@@ -13,7 +13,7 @@ class User {
         minlength: [3, "At least three characheter"],
         validate: {
           validator: async function (username) {
-            const bannedUsernames = await loadBannedUsernames(import.meta.url); // Load banned usernames dynamically
+            const bannedUsernames = await loadBannedUsernames(import.meta.url);
             return !bannedUsernames.includes(username.toLowerCase());
           },
           message: "Username is not allowed",
@@ -52,7 +52,7 @@ async function loadBannedUsernames(importUrl) {
     const filePath = join(
       dirname(fileURLToPath(importUrl)),
       "data",
-      "bannedUsernames.json"
+      "bannedUsernames.json",
     );
     const data = fs.readFileSync(filePath, "utf8");
 

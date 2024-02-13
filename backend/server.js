@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import app from "./app.js"; // Assuming your app module exports the app object directly
+import app from "./app.js";
 import connectDb from "./src/config/dbConnection.js";
 
 dotenv.config({ path: "./config.env" });

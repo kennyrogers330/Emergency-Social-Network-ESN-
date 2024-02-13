@@ -1,18 +1,12 @@
 import express from "express";
-import AuthController from "../controllers/authController.js";
-import { getHome, getAllDirectory } from "./../controllers/viewController.js";
+import AuthController from "../controllers/JoinCommunityController.js";
+
 const router = express.Router();
 
-// router.post("/signup", AuthController.Signup);
-// router.post("/login", (req, res, next) => {
-//   console.log("we here now! login");
-//   next();
-// });
-
-router.get("/", getHome);
-
+router.get("/", AuthController.getHome);
+router.get("/logout", AuthController.logout);
 router
-  .get("/citizens", getAllDirectory)
+  .get("/citizens", AuthController.getAllDirectory)
   .post("/citizens", AuthController.Signup);
 
 export default router;
