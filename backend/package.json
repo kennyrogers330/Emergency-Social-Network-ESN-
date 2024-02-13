@@ -1,5 +1,6 @@
 {
   "name": "fsebackend",
+  "type": "module",
   "version": "1.0.0",
   "description": "Backend for ESN project RW1",
   "main": "app.js",
@@ -11,8 +12,10 @@
   "author": "rw1",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.2",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.3",

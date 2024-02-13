@@ -45,7 +45,7 @@ npm start
 After the backend application has started, the API documentation is accessible on:
 
 ```
-http://<IP>:3000/api-docs or http://localhost:3000/api-docs
+http://<IP>:8000/api-docs or http://localhost:8000/api-docs
 ```
 
 This is the [ArchitectureHaiku](https://drive.google.com/file/d/1Kf4iAK2ZxRx-xaOla8Gzc3Zp4eab_RSz/view) of the application.

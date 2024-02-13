@@ -1,10 +1,24 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+// const mongoose = require("mongoose");
+// const dotenv = require("dotenv");
+
+// dotenv.config({ path: "./config.env" });
+
+// const app = require("./app");
+// const connectDb = require("./src/config/dbConnection");
+
+// connectDb();
+// const port = process.env.PORT || 3000;
+
+// app.listen(port, () => {
+//   console.log(`App running on port ${port}...`);
+// });
+
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import app from "./app.js"; // Assuming your app module exports the app object directly
+import connectDb from "./src/config/dbConnection.js";
 
 dotenv.config({ path: "./config.env" });
-
-const app = require("./app");
-const connectDb = require("./src/config/dbConnection");
 
 connectDb();
 const port = process.env.PORT || 3000;

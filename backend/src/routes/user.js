@@ -9,7 +9,7 @@
  *            type: string
  *          username:
  *            type: string
- *          password:
+ *          status:
  *            type: string
  *      ApiJoinCommunity:
  *        type: object
@@ -18,6 +18,15 @@
  *            type: string
  *          password:
  *            type: string
+ *      ApiJoinCommunityResponse:
+ *        type: object
+ *        properties:
+ *          status:
+ *            type: string
+ *          token:
+ *            type: string
+ *          user:
+ *            type: object
  *      ApiChat:
  *        type: object
  *        properties:
@@ -55,7 +64,7 @@
 
 /**
  * @swagger
- * /citizens:
+ * /api/v1/citizens:
  *    get:
  *      summary: Get all citizens. After joining the community, citizens can see themself listed in the directory, along with other citizens.
  *      tags: [Citizens]

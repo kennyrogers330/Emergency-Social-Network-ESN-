@@ -1,4 +1,4 @@
-exports.swaggerOptions = {
+export const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -9,7 +9,7 @@ exports.swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url: "http://localhost:8000",
       },
     ],
   },
