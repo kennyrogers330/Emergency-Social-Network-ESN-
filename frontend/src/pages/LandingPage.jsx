@@ -29,10 +29,10 @@ const LandingPage = () => {
           </div>
         </div>
       </nav>
-      <section className="bg-white h-full w-screen flex-1 overflow-auto">
-        <div className="max-w-screen-xl flex flex-col md:flex-row flex-wrap items-center justify-between mx-auto pt-24">
+      <section className="bg-white h-screen w-screen flex items-center justify-center overflow-auto md:px-4">
+        <div className="max-w-screen-xl flex flex-col md:flex-row flex-wrap items-center justify-center md:px-4 mx-auto pt-24">
           <div className="w-full md:w-1/2 h-full flex items-center justify-center">
-            <div className="flex flex-col justify-between items-start pt-8">
+            <div className="flex flex-col justify-between lg:items-start md:px-8 px-8 lg:px-0">
               <div className="flex flex-col justify-between">
                 <h1 className="font-bold text-gray-700 text-wrap text-6xl">
                   Stay Alert With The Emergency Social Network
@@ -53,7 +53,7 @@ const LandingPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 h-full items-start">
+          <div className="hidden md:block w-full md:w-1/2 h-full items-start">
             <img
               alt="Hero"
               className="w-full h-auto object-contain"

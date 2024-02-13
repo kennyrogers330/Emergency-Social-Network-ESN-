@@ -2,16 +2,14 @@ import React from 'react';
 
 const Login = () => {
   return (
-    <section className="w-screen h-full bg-white flex">
-      <div className="h-full flex flex-row justify-between items-center flex-wrap">
-        <div className="flex w-[600px] h-screen bg-colorBluePrimary mr-8">
-          <div className="relative w-screen h-1/2 bg-colorBluePrimary">
-            <div className="absolute top-0 left-0 w-full h-full bg-white rounded-b-full">
-              <h2 className="p-4">Hello</h2>
-            </div>
+    <section className="w-screen h-screen flex overflow-auto">
+      <div className="w-screen h-full flex flex-row justify-between items-center">
+        <div className="hidden md:block w-1/2 h-full bg-colorBluePrimary">
+          <div className="w-full h-2/3 items-center justify-center bg-white rounded-b-full">
+            <h2>hello</h2>
           </div>
         </div>
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-center lg:items-start md:items-start w-full md:w-1/2 h-screen justify-center px-8">
           <div>
             <a
               href="https://res.cloudinary.com/dcpjf6uns/image/upload/v1707620915/Logo_llf7pi.png"
