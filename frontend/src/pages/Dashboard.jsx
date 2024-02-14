@@ -1,11 +1,26 @@
+import React, { useContext } from 'react';
+
 import Chat from '../components/Dashboard/Chat.jsx';
-import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../services/AuthServices.js';
+import { UserContext } from '../context/UserContext.js';
 import Button from './../components/Button.jsx';
 import Input from '../components/Input.jsx';
 
-const notify = () => toast.error('Here is a toaster');
-
 function Dashboard() {
+  const { setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setCurrentUser(null);
+      navigate('/login', { replace: true });
+    } catch (e) {
+      console.error('Error during logout:', e);
+    }
+  };
+
   return (
     <div className="flex justify-center px-3 h-full">
       <div className="w-1/4 border-r-2">
@@ -21,7 +36,7 @@ function Dashboard() {
           Large Button
         </Button>
         <Button size="small">Small Button</Button>
-        <Button onClick={notify}>Click to Toast</Button>
+        <Button onClick={handleLogout}>Click to Logout</Button>
         <Input
           label="Label"
           details="details"
