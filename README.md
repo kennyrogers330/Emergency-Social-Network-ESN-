@@ -48,7 +48,7 @@ After the backend application has started, the API documentation is accessible o
 http://<IP>:8000/api-docs or http://localhost:8000/api-docs
 ```
 
-This is the [ArchitectureHaiku](https://drive.google.com/file/d/1Kf4iAK2ZxRx-xaOla8Gzc3Zp4eab_RSz/view) of the application.
+This is the [ArchitectureHaiku](https://drive.google.com/file/d/1Kf4iAK2ZxRx-xaOla8Gzc3Zp4eab_RSz/view?usp=sharing) of the application.
 
 These are the [AnalysisClasses](https://docs.google.com/document/d/1VFcpOEG1Exxgjf78wP2nl9l7Kc4ffG-Qa23HQuFMWpY/edit) for use cases `Join a community` and `Chat Publicly`.
 
