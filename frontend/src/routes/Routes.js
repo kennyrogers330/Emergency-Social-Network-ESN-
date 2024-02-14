@@ -26,7 +26,10 @@ const AppRoutes = () => {
         path="/dashboard"
         element={<DashboardLayout key="dashboard-layout" />}
       >
-        <Route index element={<Dashboard key="dashboard-content" />} />
+        <Route
+          index
+          element={<Dashboard userdata={currentUser} key="dashboard-content" />}
+        />
       </Route>
       <Route path="/login" element={<Login key="login-content" />} />
       <Route path="*" element={<PageNotFound key="not-found-content" />} />
