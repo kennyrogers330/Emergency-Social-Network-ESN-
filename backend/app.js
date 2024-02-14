@@ -7,6 +7,12 @@ import citizeRouter from "./src/middlewares/citizenRoutes.js";
 import ChatInterface from "./src/middlewares/ChatInterface.js";
 const app = express();
 
+import { createServer } from "http";
+import { Server } from "socket.io";
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
 app.use(express.json());
 
 // Swagger setup
@@ -19,4 +25,4 @@ app.use("/api/v1/citizens", citizeRouter);
 
 app.use("/api/v1/messages", ChatInterface);
 
-export default app;
+export default httpServer;

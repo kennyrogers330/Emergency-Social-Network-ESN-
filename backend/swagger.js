@@ -16,3 +16,5 @@ export const swaggerOptions = {
   apis: ["./src/routes/*.js"],
   explorer: true,
 };
+
+export default swaggerOptions;

@@ -36,6 +36,8 @@
  *            type: string
  *          timestamp:
  *            type: string
+ *          statusMessage:
+ *            type: string
  *      ApiChatResponse:
  *        type: object
  *        properties:
@@ -47,7 +49,11 @@
  *            type: string
  *          timestamp:
  *            type: string
+ *          statusMessage:
+ *            type: string
+ * 
  */
+
 
 /**
  * @swagger
@@ -158,7 +164,6 @@
  *            application/json:
  *              schema:
  *                type: object
- *
  * /chats:
  *    post:
  *      summary: Chat publicly. The citizen can send a chat to the community.
@@ -168,7 +173,7 @@
  *             application/json:
  *                schema:
  *                 items:
- *                   $ref: "#/components/schemas/ApiChat"
+ *                   $ref: '#/components/schemas/ApiChat'
  *      responses:
  *         200:
  *           description: Ok
@@ -202,10 +207,52 @@
  *            application/json:
  *              schema:
  *                type: object
+ *    get:
+ *      summary: Get all Chats. After joining the community, Chats can see themself listed in the directory, along with other Chats.
+ *      tags: [Chats]
+ *      responses:
+ *         200:
+ *           description: A list of Chats
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
  */
 
-const express = require("express");
-
+import express from "express";
 const router = express.Router();
+// const passport = require('../middlewares/passport-config');
+
+// import {joinCommunity, getCitizens} from "../controllers/userController.js";
+
+// // Handle register
+// router.post("/citizens", joinCommunity);
+// router.get("/citizens", getCitizens)
 
 export default router;
