@@ -1,17 +1,11 @@
 import express from "express";
-import cors from "cors";
+
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { swaggerOptions } from "./swagger.js";
 import citizeRouter from "./src/middlewares/citizenRoutes.js";
-
+import ChatInterface from "./src/middlewares/ChatInterface.js";
 const app = express();
-
-import { createServer } from "http";
-
-const httpServer = createServer(app);
-
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 // Swagger setup
@@ -20,6 +14,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // MOUTING ROUTES
 
-app.use("/api/v1", citizeRouter);
+app.use("/api/v1/citizens", citizeRouter);
 
-export default httpServer;
+app.use("/api/v1/messages", ChatInterface);
+
+export default app;

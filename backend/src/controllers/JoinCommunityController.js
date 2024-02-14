@@ -1,4 +1,4 @@
-import { token } from "morgan";
+import { promisify } from "util";
 import Citizen from "../models/Citizen.js";
 import jwt from "jsonwebtoken";
 import APIFeatures from "../utils/apiFeatures.js";
@@ -111,6 +111,67 @@ class AuthController {
         error: err.message,
       });
     }
+  }
+
+  // static async protect(req, res, next) {
+  //   let token;
+  //   if (
+  //     req.headers.authorization &&
+  //     req.headers.authorization.startsWith("Bearer")
+  //   ) {
+  //     token = req.headers.authorization.split(" ")[1];
+  //   }
+  //   // else if (req.cookies.jwt) {
+  //   //   token = req.cookies.jwt;
+  //   // }
+  //   console.log(req.headers.authorization);
+  //   if (!token) {
+  //     // console.log(req);
+  //     return res.status(401).json({
+  //       status: "auth-failure",
+  //       error: "You are not logged in! Please log in to get access.",
+  //     });
+  //   } else {
+  //     return res.status(401).json({
+  //       status: "success",
+  //       error: "You are not logged in! Please log in to get access.",
+  //     });
+  //   }
+  // }
+
+  static async protect(req, res, next) {
+    let token;
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    } else if (req.cookies.jwt) {
+      token = req.cookies.jwt;
+    }
+
+    if (!token) {
+      // console.log(req);
+      return res.status(401).json({
+        status: "auth-failure",
+        error: "You are not logged in! Please log in to get access.",
+      });
+    }
+
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    const auth_citizen = await Citizen.findById(decoded.id);
+
+    if (!auth_citizen) {
+      return res.status(401).json({
+        status: "auth-failure",
+        error: "The User belonging to this token does no longer exist",
+      });
+    }
+
+    req.user = auth_citizen;
+    res.locals.user = auth_citizen;
+    next();
   }
 }
 export default AuthController;

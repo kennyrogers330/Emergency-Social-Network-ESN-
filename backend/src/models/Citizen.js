@@ -13,7 +13,7 @@ class User {
         minlength: [3, "At least three characheter"],
         validate: {
           validator: async function (username) {
-            const bannedUsernames = await loadBannedUsernames(import.meta.url);
+            const bannedUsernames = await loadBannedUsernames(import.meta.url); // Load banned usernames dynamically
             return !bannedUsernames.includes(username.toLowerCase());
           },
           message: "Username is not allowed",
