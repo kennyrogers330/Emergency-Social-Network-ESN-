@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useContext } from 'react';
-import Chat from '../components/Dashboard/Chat.jsx';
-import Member from '../components/Dashboard/MembersDirectory.jsx';
-import Messages from '../components/Dashboard/Messages.jsx';
+import Chat from '../components/dashboard/Chat.jsx';
+import Member from '../components/dashboard/MembersDirectory.jsx';
+import Messages from '../components/dashboard/Messages.jsx';
 import { UserContext } from '../context/UserContext.js';
 import { logout } from '../services/AuthServices.js';
 
