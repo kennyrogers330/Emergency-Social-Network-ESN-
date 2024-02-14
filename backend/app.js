@@ -1,5 +1,5 @@
 import express from "express";
-import morgan from "morgan";
+import cors from "cors";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { swaggerOptions } from "./swagger.js";
@@ -8,11 +8,10 @@ import citizeRouter from "./src/middlewares/citizenRoutes.js";
 const app = express();
 
 import { createServer } from "http";
-import { Server } from "socket.io";
 
 const httpServer = createServer(app);
-const io = new Server(httpServer);
 
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 app.use(express.json());
 
 // Swagger setup

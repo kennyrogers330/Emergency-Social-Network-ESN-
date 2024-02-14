@@ -16,7 +16,7 @@ const Button = ({
   className,
   ...props
 }) => {
-  let buttonClasses = `rounded-sm shadow-sm ${sizeClasses[size]} ${backgroundColor} ${textColor} ${className}`;
+  let buttonClasses = `rounded-sm w-full shadow-sm ${sizeClasses[size]} ${backgroundColor} ${textColor} ${className}`;
   if (hoverBackgroundColor) {
     buttonClasses += ` hover:${hoverBackgroundColor}`;
   }
