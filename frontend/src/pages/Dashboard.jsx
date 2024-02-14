@@ -20,6 +20,8 @@ function Dashboard({ userdata }) {
   //   }
   // };
 
+  console.log('userdata:', userdata);
+
   return (
     <div className="flex justify-center px-3 h-full max-h-full">
       <div className="w-1/4 border-r-2">
