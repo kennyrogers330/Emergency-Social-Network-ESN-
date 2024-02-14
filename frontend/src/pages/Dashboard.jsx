@@ -6,7 +6,7 @@ import Messages from '../components/Dashboard/Messages.jsx';
 import { UserContext } from '../context/UserContext.js';
 import { logout } from '../services/AuthServices.js';
 
-function Dashboard() {
+function Dashboard({ userdata }) {
   const { setCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
 
