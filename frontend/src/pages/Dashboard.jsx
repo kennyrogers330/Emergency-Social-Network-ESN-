@@ -1,4 +1,4 @@
-import Chat from '../components/dashboard/Chat.jsx';
+import Chat from '../components/Dashboard/Chat.jsx';
 import { toast } from 'react-hot-toast';
 import Button from './../components/Button.jsx';
 import Input from './../components/Input.jsx';

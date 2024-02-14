@@ -4,8 +4,22 @@ import Login from './pages/Login.jsx';
 import PageNotFound from './pages/PageNotFound.jsx';
 import { Toaster } from 'react-hot-toast';
 import DashboardLayout from './layout/DashboardLayout.js';
+// import io from 'socket.io-client';
+import React from 'react';
+import ChatUI from './components/Socket/chatPublicly.js';
 
 function App() {
+  // useEffect(() => {
+  //   const socket = io.connect('http://localhost:8000');
+  //   socket.on('Data', (data) => {
+  //     console.log('Message from server:', data);
+  //   });
+
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
   return (
     <>
       <BrowserRouter>
@@ -20,6 +34,7 @@ function App() {
           </Route>
           {/* <Route path="dashboard" element={<Dashboard />} /> */}
           <Route path="login" element={<Login />} />
+          <Route path="/public/:username" element={<ChatUI />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
