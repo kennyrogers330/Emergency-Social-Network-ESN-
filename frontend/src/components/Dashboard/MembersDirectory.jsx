@@ -3,8 +3,8 @@ function MembersDirectory() {
   return (
     <>
       <div className="flex flex-col">
-        <div className="p-2">
-          <div className="flex justify-between font-sans m-2">
+        <div className="py-5 px-5 border-b">
+          <div className="flex justify-between font-sans">
             <div>Group Directory</div>
             <div>
               <svg
@@ -24,7 +24,6 @@ function MembersDirectory() {
             </div>
           </div>
         </div>
-        <hr className="border-gray-300 mb-4"></hr>
         <div className="ml-3">
           <div className="flex justify-start font-semibold">
             <div className="mr-2">Group Members</div>
