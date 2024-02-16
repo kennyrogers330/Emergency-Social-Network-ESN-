@@ -1,6 +1,8 @@
 import React from 'react';
 import profile from '../../assets/profile.png';
 import group from '../../assets/group.jpg';
+import Input from '../Input.jsx';
+import Button from '../Button.jsx';
 
 const Chat = () => {
   const user = [{ id: 1 }];
@@ -172,14 +174,12 @@ const Chat = () => {
                 />
               </svg>
             </div>
-            <input
-              placeholder="Type message"
-              className="w-full h-12 p-2 rounded-lg message"
-            />
+            <Input placeholder="Type message" />
             <div>
-              <button
+              <Button
                 type="submit"
-                className="bg-inherit hover:bg-[#F3F3F3] h-12 absolute right-5 pr-3"
+                className="bg-inherit absolute hover:bg-[#F3F3F3] w-[35px] right-6 bottom-7 shadow-inherit"
+                size={'small'}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +193,7 @@ const Chat = () => {
                     fill="#748CF8"
                   />
                 </svg>
-              </button>
+              </Button>
             </div>
           </div>
         </form>

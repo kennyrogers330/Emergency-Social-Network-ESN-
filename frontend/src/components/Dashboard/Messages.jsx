@@ -1,9 +1,12 @@
+import Input from '../Input.jsx';
+import Contact from './Contact.jsx';
+
 function Messages() {
   return (
     <>
       <div className="flex flex-col">
-        <div className="p-2">
-          <div className="flex justify-between font-sans m-2">
+        <div className="py-5 px-5 border-b">
+          <div className="flex justify-between font-sans">
             <div className="flex font-semibold text-sm">
               <span className="font-bold">Messages</span>
               <span className="p-1">
@@ -40,8 +43,10 @@ function Messages() {
             </div>
           </div>
         </div>
-        <hr className="border-gray-300 mb-4"></hr>
-        <div className="c"></div>
+        <div className="px-5 py-4">
+          <Input className="bg=[#F3F3F3]" placeholder="Search messages" />
+        </div>
+        <Contact />
       </div>
     </>
   );

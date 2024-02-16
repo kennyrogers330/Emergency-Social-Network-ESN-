@@ -18,7 +18,7 @@ const Input = ({
     ${disabled ? 'bg-gray-100 text-gray-500 cursor-not-allowed' : ''}
     ${className}`;
   return (
-    <div className="flex flex-col mb-4">
+    <div className="flex flex-col w-full justify-center">
       <div className="flex justify-between">
         {label && <label className="mb-2 text-gray-700">{label}</label>}
         {details && <label className="mb-2 text-gray-700">{details}</label>}
