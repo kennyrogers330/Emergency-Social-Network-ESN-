@@ -1,24 +1,16 @@
-// PrivateRoutes.js
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Route, Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { Outlet, Navigate } from 'react-router-dom';
 
-const PrivateRoute = ({ children, ...rest }) => {
+const PrivateRoutes = () => {
   const { currentUser } = useContext(UserContext);
-  const navigate = useNavigate();
 
-  if (!currentUser) {
-    // Redirect to the login page if not authenticated
-    navigate('/login', { replace: true });
-    return null;
-  }
-
-  return <Route {...rest} element={children} />;
+  return currentUser ? <Outlet /> : <Navigate to="/login" />;
 };
 
-PrivateRoute.propTypes = {
+PrivateRoutes.propTypes = {
   children: PropTypes.node,
 };
 
-export default PrivateRoute;
+export default PrivateRoutes;

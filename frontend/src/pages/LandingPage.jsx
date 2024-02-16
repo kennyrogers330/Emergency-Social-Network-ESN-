@@ -5,7 +5,10 @@ const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="h-screen w-screen bg-white flex flex-col sm:flex-row min-h-0 min-w-0 overflow-hidden">
+    <section
+      className="h-screen w-screen bg-white flex flex-col sm:flex-row min-h-0 min-w-0 overflow-hidden"
+      style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+    >
       <nav className="bg-white fixed w-full z-20 top-0 border-b">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <a

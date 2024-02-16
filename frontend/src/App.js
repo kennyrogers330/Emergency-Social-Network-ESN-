@@ -16,11 +16,25 @@ function App() {
   // }, []);
 
   return (
-    <BrowserRouter>
-      <UserProvider>
-        <AppRoutes />
-      </UserProvider>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <UserProvider>
+          <AppRoutes />
+        </UserProvider>
+      </BrowserRouter>
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          className: 'text-base max-w-md py-4 px-6 bg-gray-50 text-gray-700',
+        }}
+      />
+    </>
   );
 }
 

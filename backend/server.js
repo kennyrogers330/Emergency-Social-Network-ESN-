@@ -4,7 +4,6 @@ import connectDb from "./src/config/dbConnection.js";
 import { Server } from "socket.io";
 import http from "http";
 import Message from "./src/models/message.js";
-import cors from "cors";
 import { JoinCommunity, getThisUser, onExit } from "./src/utils/directory.js";
 import { MessageBody } from "./src/utils/chatBody.js";
 
@@ -16,6 +15,8 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
   },
 });
 

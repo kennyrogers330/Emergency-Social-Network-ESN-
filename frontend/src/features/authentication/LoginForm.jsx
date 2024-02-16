@@ -29,13 +29,21 @@ const LoginForm = () => {
         console.log('User logged in:', userData);
       } else {
         toast.error('Login failed');
+        throw new Error('Login failed');
       }
     } catch (err) {
       console.error('Error during login:', err);
-      toast.error('Login failed');
+      if (!err.message || !err.message.includes('Login failed')) {
+        if (err.response) {
+          toast.error(
+            `Login failed: ${err.response.status} ${err.response.statusText}`,
+          );
+        } else {
+          toast.error('Login failed');
+        }
+      }
     }
   };
-
   return (
     <>
       <div className="flex flex-col justify-between w-full">

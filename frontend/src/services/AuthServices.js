@@ -11,7 +11,8 @@ export const login = async (username, password) => {
     const token = response.data.token;
     if (token) {
       localStorage.setItem('user', JSON.stringify(response.data));
-      console.log('User logged in:', response.data);
+    } else {
+      throw new Error('Invalid username or password');
     }
     return response.data;
   } catch (err) {

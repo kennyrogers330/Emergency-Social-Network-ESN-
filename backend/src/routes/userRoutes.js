@@ -1,12 +1,16 @@
 import express from "express";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import swaggerOptions from "../../swagger.js";
 import AuthController from "../controllers/JoinCommunityController.js";
 
 const router = express.Router();
 
-router.get("/homePage", AuthController.getHome);
-router.get("/logout", AuthController.logout);
+router.route("/homepage").get(AuthController.getHome);
+router.route("/logout").get(AuthController.logout);
+
 router
-  .route("/")
+  .route("/citizens")
   .get(AuthController.protect, AuthController.getAllDirectory)
   .post(AuthController.Signup);
 

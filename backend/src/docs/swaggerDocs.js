@@ -51,9 +51,8 @@
  *            type: string
  *          statusMessage:
  *            type: string
- * 
+ *
  */
-
 
 /**
  * @swagger
@@ -83,7 +82,7 @@
  *           type: string
  *         example: -status,username
  *       - name: fields
- *         in: path 
+ *         in: path
  *         description: Specify which fields to include in the response
  *         required: true
  *         schema:
@@ -245,14 +244,14 @@
  *                type: object
  */
 
-import express from "express";
-const router = express.Router();
-// const passport = require('../middlewares/passport-config');
+// import express from "express";
+// const router = express.Router();
+// // const passport = require('../middlewares/passport-config');
 
-// import {joinCommunity, getCitizens} from "../controllers/userController.js";
+// // import {joinCommunity, getCitizens} from "../controllers/userController.js";
 
-// // Handle register
-// router.post("/citizens", joinCommunity);
-// router.get("/citizens", getCitizens)
+// // // Handle register
+// // router.post("/citizens", joinCommunity);
+// // router.get("/citizens", getCitizens)
 
-export default router;
+// export default router;
