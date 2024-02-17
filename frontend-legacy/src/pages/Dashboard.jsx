@@ -1,18 +1,16 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Chat from '../features/dashboard/Chat.jsx';
-import Member from '../features/dashboard/MembersDirectory.jsx';
-import Messages from '../features/dashboard/Messages.jsx';
-import { UserContext } from '../context/UserContext.jsx';
+import Chat from '../components/Dashboard/Chat.jsx';
+import Member from '../components/Dashboard/MembersDirectory.jsx';
+import Messages from '../components/Dashboard/Messages.jsx';
+import { UserContext } from '../context/UserContext.js';
 import { logout } from '../services/AuthServices.js';
 
 function Dashboard({ userdata }) {
-  // const { setCurrentUser } = useContext(UserContext);
-  // const navigate = useNavigate();
+  const { setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-  // console.log('userdata:', userdata.user._id);
+  console.log('userdata:', userdata.user._id);
 
   return (
     <div className="flex justify-center h-full max-h-full">
