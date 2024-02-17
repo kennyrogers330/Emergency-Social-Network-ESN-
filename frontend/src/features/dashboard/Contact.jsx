@@ -1,4 +1,4 @@
-import group from '../../assets/group.jpg';
+import group from '../../assets/images/group.jpg';
 
 const Contact = () => {
   return (
