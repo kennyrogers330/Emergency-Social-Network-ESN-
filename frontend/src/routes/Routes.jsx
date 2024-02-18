@@ -20,8 +20,8 @@ const AppRoutes = () => {
           </PrivateRoutes>
         }
       >
-        <Route element={<Navigate replace to='dashboard' />} />
-        <Route path='dashboard' element={<Dashboard />} />
+        <Route element={<Navigate replace to="dashboard" />} />
+        <Route path="dashboard" element={<Dashboard />} />
       </Route>
 
       {/* <Route
@@ -47,11 +47,11 @@ const AppRoutes = () => {
           />
         </Route>
       </Route> */}
-      <Route path='/' element={<LandingPage key='welcome-content' />} />
-      <Route path='/login' element={<Login key='login-content' />} />
-      <Route path='*' element={<PageNotFound key='not-found-content' />} />
+      <Route path="/" element={<LandingPage key="welcome-content" />} />
+      <Route path="/login" element={<Login key="login-content" />} />
+      <Route path="*" element={<PageNotFound key="not-found-content" />} />
     </Routes>
-  );
+  )
 };
 
 export default AppRoutes;
