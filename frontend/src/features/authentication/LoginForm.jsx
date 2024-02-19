@@ -7,75 +7,74 @@ import Button from "../../components/Button.jsx";
 import { toast } from "react-hot-toast";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [input, setInput] = useState({ username: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
+  const handleChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const handleLogin = async () => {
     setSubmitted(true);
-    if (username.length < 3 || password.length < 4) {
+    if (input.username.length < 3 || input.password.length < 4) {
       return;
     }
 
     try {
-      const userData = await login(username, password);
+      const userData = await login(input.username, input.password);
       if (userData) {
         setCurrentUser(userData);
         toast.success("Logged in successfully");
         navigate("/dashboard", { replace: true });
         console.log("User logged in:", userData);
       } else {
-        setUsername("");
-        setPassword("");
+        setInput({ username: "", password: "" });
         toast.error("Login failed");
         throw new Error("Login failed");
       }
     } catch (err) {
-      setUsername("");
-      setPassword("");
+      setInput({ username: "", password: "" });
       if (!err.message || !err.message.includes("Login failed")) {
         if (err.response) {
-          toast.error(`Login failed: ${err.response.error}`);
-          setUsername("");
-          setPassword("");
+          toast.error(`Login failed: ${err.response.data.error}`);
         } else {
           toast.error("Password or username is incorrect. Please try again.");
-          setUsername("");
-          setPassword("");
         }
       }
     }
   };
+
   return (
     <>
       <div className="flex flex-col justify-between w-full">
         <Input
           placeholder="Enter Username"
           label="Username"
+          name="username"
           error={
-            submitted && (!username || username.length < 3)
+            submitted && (!input.username || input.username.length < 3)
               ? "Username must be at least 3 characters"
               : ""
           }
-          onChange={(event) => {
-            setUsername(event.target.value);
-          }}
+          onChange={handleChange}
         />
         <Input
           placeholder="Enter Password"
           label="Password"
+          name="password"
           error={
-            submitted && (!password || password.length < 4)
+            submitted && (!input.password || input.password.length < 4)
               ? "Please enter a valid password"
               : ""
           }
           type="password"
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
+          onChange={handleChange}
         />
       </div>
       <div className="items-center w-full mt-12">

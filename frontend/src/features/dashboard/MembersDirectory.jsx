@@ -1,5 +1,26 @@
-import Member from './Member.jsx';
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import Button from "../../components/Button.jsx";
+import Member from "./Member.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
+import { logout } from "../../services/AuthServices.js";
+
 function MembersDirectory() {
+  const { setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setCurrentUser(null);
+      navigate("/login", { replace: true });
+      toast.success("Logged in successfully");
+    } catch (e) {
+      console.error("Error during logout:", e);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col">
@@ -31,6 +52,7 @@ function MembersDirectory() {
             <div className="mr-2">12</div>
           </div>
           <Member />
+          <Button onClick={handleLogout}>Log out</Button>
         </div>
       </div>
     </>
