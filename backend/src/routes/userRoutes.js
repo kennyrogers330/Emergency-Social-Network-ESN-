@@ -1,5 +1,6 @@
 import express from "express";
 import AuthController from "../controllers/JoinCommunityController.js";
+import isLogin from "../middlewares/auth.js";
 
 const router = express.Router();
 
