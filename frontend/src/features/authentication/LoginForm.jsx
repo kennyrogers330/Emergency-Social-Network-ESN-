@@ -1,14 +1,14 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../services/AuthServices.js';
-import { UserContext } from '../../context/UserContext.jsx';
-import Input from '../../components/Input.jsx';
-import Button from '../../components/Button.jsx';
-import { toast } from 'react-hot-toast';
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../services/AuthServices.js";
+import { UserContext } from "../../context/UserContext.jsx";
+import Input from "../../components/Input.jsx";
+import Button from "../../components/Button.jsx";
+import { toast } from "react-hot-toast";
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
 
@@ -24,22 +24,27 @@ const LoginForm = () => {
       const userData = await login(username, password);
       if (userData) {
         setCurrentUser(userData);
-        toast.success('Logged in successfully');
-        navigate('/dashboard', { replace: true });
-        console.log('User logged in:', userData);
+        toast.success("Logged in successfully");
+        navigate("/dashboard", { replace: true });
+        console.log("User logged in:", userData);
       } else {
-        toast.error('Login failed');
-        throw new Error('Login failed');
+        setUsername("");
+        setPassword("");
+        toast.error("Login failed");
+        throw new Error("Login failed");
       }
     } catch (err) {
-      console.error('Error during login:', err);
-      if (!err.message || !err.message.includes('Login failed')) {
+      setUsername("");
+      setPassword("");
+      if (!err.message || !err.message.includes("Login failed")) {
         if (err.response) {
-          toast.error(
-            `Login failed: ${err.response.status} ${err.response.statusText}`,
-          );
+          toast.error(`Login failed: ${err.response.error}`);
+          setUsername("");
+          setPassword("");
         } else {
-          toast.error('Login failed');
+          toast.error("Password or username is incorrect. Please try again.");
+          setUsername("");
+          setPassword("");
         }
       }
     }
@@ -52,8 +57,8 @@ const LoginForm = () => {
           label="Username"
           error={
             submitted && (!username || username.length < 3)
-              ? 'Username must be at least 3 characters'
-              : ''
+              ? "Username must be at least 3 characters"
+              : ""
           }
           onChange={(event) => {
             setUsername(event.target.value);
@@ -64,8 +69,8 @@ const LoginForm = () => {
           label="Password"
           error={
             submitted && (!password || password.length < 4)
-              ? 'Please enter a valid password'
-              : ''
+              ? "Please enter a valid password"
+              : ""
           }
           type="password"
           onChange={(event) => {
