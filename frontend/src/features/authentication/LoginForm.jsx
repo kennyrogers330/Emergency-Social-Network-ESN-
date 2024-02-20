@@ -1,18 +1,21 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "../../services/AuthServices.js";
-import { UserContext } from "../../context/UserContext.jsx";
-import Input from "../../components/Input.jsx";
-import Button from "../../components/Button.jsx";
-import { toast } from "react-hot-toast";
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../services/AuthServices.js';
+import { UserContext } from '../../context/UserContext.jsx';
+import Input from '../../components/Input.jsx';
+import Button from '../../components/Button.jsx';
+import { toast } from 'react-hot-toast';
+import { existingUsers } from '../../services/AuthServices.js';
+import Popup from '../../components/Popup.jsx';
 
 const LoginForm = () => {
   const [input, setInput] = useState({ username: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
 
   const navigate = useNavigate();
-
+  
   const handleChange = (event) => {
     setInput({
       ...input,
@@ -47,12 +50,37 @@ const LoginForm = () => {
           toast.error("Password or username is incorrect. Please try again.");
         }
       }
-    }
-  };
+    }  
+  }
 
+  const handleYesClick = () => {        
+    handleLogin()
+  };
+  const handleNoClick = () => {
+    setIsVisible(false);
+    navigate('/login', { replace: true });
+  }
+
+  const tryLogin = () => {    
+    if (input.username.length < 3 || input.password.length < 4) {
+      return;
+    }
+    if (existingUsers.usernames.includes(input.username)) {
+      setIsVisible(false)      
+      handleLogin() 
+    } else {
+      setIsVisible(true);      
+    }
+  }
+  
   return (
     <>
       <div className="flex flex-col justify-between w-full">
+        <Popup 
+          clickYes={handleYesClick}
+          clickNo={handleNoClick}
+          visibility={isVisible}
+        />
         <Input
           placeholder="Enter Username"
           label="Username"
@@ -82,7 +110,7 @@ const LoginForm = () => {
           size="large"
           backgroundColor={`bg-colorBluePrimary`}
           textColor={`text-white`}
-          onClick={handleLogin}
+          onClick={tryLogin}
         >
           Login
         </Button>
