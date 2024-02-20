@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import APIFeatures from "../utils/apiFeatures.js";
 
 class AuthController {
-  static currentUser = ""
+  static currentUser = "";
 
   static sendResponse(res, user, status) {
     const id = user._id;
@@ -27,13 +27,10 @@ class AuthController {
     });
   }
 
-  
-
   static async Signup(req, res, next) {
-    
     try {
       const { username, password } = req.body;
-      AuthController.currentUser = username
+      AuthController.currentUser = username;
       const user = await Citizen.findOne({ username });
 
       if (user) {
@@ -76,12 +73,17 @@ class AuthController {
 
   static async getHome(req, res, next) {
     try {
-      const citizens = await Citizen.find({}, { _id: 0, username: 1 });
+      const citizens = await Citizen.find(
+        {},
+        { _id: 0, username: 1, status: 2 },
+      );
       const usernames = citizens.map((Citizen) => Citizen.username);
 
       res.status(200).json({
         usernames,
+        citizens,
       });
+      // console.log(citizens);
     } catch (err) {
       res.status(400).json({
         status: "auth-failure",
@@ -127,7 +129,7 @@ class AuthController {
       const user = await Citizen.findOneAndUpdate(
         { username: AuthController.currentUser },
         { $set: { status: "offline" } },
-        { new: true } 
+        { new: true },
       );
 
       if (!user) {
