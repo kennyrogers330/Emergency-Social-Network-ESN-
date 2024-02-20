@@ -1,9 +1,30 @@
-import Member from './Member.jsx';
-function MembersDirectory() {
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button.jsx";
+import Member from "./Member.jsx";
+import { UserContext } from "../../context/UserContext.jsx";
+import { logout } from "../../services/AuthServices.js";
+import { existingUsers } from "../../services/AuthServices.js";
+import { toast } from "react-hot-toast";
+
+function MembersDirectory({ toggleMember, visibility }) {
+  const { setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setCurrentUser(null);
+      toast.success("Logged out successfully");
+      navigate("/login", { replace: true });
+    } catch (e) {
+      console.error("Error during logout:", e);
+    }
+  };
+
   return (
-    <>
-      <div className="flex flex-col">
-        <div className="py-5 px-5 border-b">
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-col flex-grow overflow-auto">
+        <div className="py-5 px-5 border-b fixed top-0 w-full bg-white">
           <div className="flex justify-between font-sans">
             <div>Group Directory</div>
             <div>
@@ -24,16 +45,20 @@ function MembersDirectory() {
             </div>
           </div>
         </div>
-        <div className="ml-3">
+        <div className="ml-3 mt-20 mb-4">
           <div className="flex justify-start font-semibold">
             <div className="mr-2">Group Members</div>
-
-            <div className="mr-2">12</div>
+            <div className="mr-2">{existingUsers.citizens.length}</div>
           </div>
-          <Member />
+          {existingUsers.citizens.map((user) => {
+            return <Member member={user.username} status={user.status} />;
+          })}
         </div>
       </div>
-    </>
+      <div className="flex-shrink-0">
+        <Button onClick={handleLogout}>Log out</Button>
+      </div>
+    </div>
   );
 }
 export default MembersDirectory;

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import { getExistingUsers } from '../services/AuthServices';
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
+  const navigate = useNavigate();  
   return (
     <section
       className="h-screen w-screen bg-white flex flex-col sm:flex-row min-h-0 min-w-0 overflow-hidden"
@@ -67,5 +67,5 @@ const LandingPage = () => {
     </section>
   );
 };
-
+export const existingUsers = getExistingUsers()
 export default LandingPage;

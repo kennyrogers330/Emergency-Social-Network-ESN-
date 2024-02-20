@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import APIFeatures from "../utils/apiFeatures.js";
 
 class AuthController {
+  static currentUser = "";
+
   static sendResponse(res, user, status) {
     const id = user._id;
     const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -28,6 +30,7 @@ class AuthController {
   static async Signup(req, res, next) {
     try {
       const { username, password } = req.body;
+      AuthController.currentUser = username;
       const user = await Citizen.findOne({ username });
 
       if (user) {
@@ -46,6 +49,7 @@ class AuthController {
           );
 
           onlineCitizen.password = undefined;
+          req.session.user = onlineCitizen;
           AuthController.sendResponse(res, onlineCitizen, "loged-in");
         }
       } else {
@@ -55,7 +59,9 @@ class AuthController {
           status: "online",
         });
         newCitizen.password = undefined;
+        req.session.user = newCitizen;
         AuthController.sendResponse(res, newCitizen, "signed-up");
+        console.log(newCitizen);
       }
     } catch (err) {
       res.status(400).json({
@@ -67,12 +73,17 @@ class AuthController {
 
   static async getHome(req, res, next) {
     try {
-      const citizens = await Citizen.find({}, { _id: 0, username: 1 });
+      const citizens = await Citizen.find(
+        {},
+        { _id: 0, username: 1, status: 2 },
+      );
       const usernames = citizens.map((Citizen) => Citizen.username);
 
       res.status(200).json({
         usernames,
+        citizens,
       });
+      // console.log(citizens);
     } catch (err) {
       res.status(400).json({
         status: "auth-failure",
@@ -100,44 +111,52 @@ class AuthController {
 
   static async logout(req, res) {
     try {
-      res.cookie("jwt", "", {
-        expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true,
+      if (!req.session || !req.session.user) {
+        return res.status(401).json({
+          status: "failure",
+          error: "You are not logged in!",
+        });
+      }
+
+      const expireToken = jwt.sign({}, process.env.JWT_SECRET, {
+        expiresIn: 1,
       });
-      res.status(200).json({ status: "success" });
+      res.cookie("jwt", expireToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1),
+      });
+
+      const user = await Citizen.findOneAndUpdate(
+        { username: AuthController.currentUser },
+        { $set: { status: "offline" } },
+        { new: true },
+      );
+
+      if (!user) {
+        console.log("User not found");
+      } else {
+        console.log("User status set to offline");
+      }
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error(err);
+          return res
+            .status(500)
+            .json({ status: "failure", error: err.message });
+        }
+        return res
+          .status(200)
+          .json({ status: "success", message: "Logged out" });
+      });
     } catch (err) {
-      res.status(400).json({
+      console.error(err);
+      return res.status(400).json({
         status: "auth-failure",
         error: err.message,
       });
     }
   }
-
-  // static async protect(req, res, next) {
-  //   let token;
-  //   if (
-  //     req.headers.authorization &&
-  //     req.headers.authorization.startsWith("Bearer")
-  //   ) {
-  //     token = req.headers.authorization.split(" ")[1];
-  //   }
-  //   // else if (req.cookies.jwt) {
-  //   //   token = req.cookies.jwt;
-  //   // }
-  //   console.log(req.headers.authorization);
-  //   if (!token) {
-  //     // console.log(req);
-  //     return res.status(401).json({
-  //       status: "auth-failure",
-  //       error: "You are not logged in! Please log in to get access.",
-  //     });
-  //   } else {
-  //     return res.status(401).json({
-  //       status: "success",
-  //       error: "You are not logged in! Please log in to get access.",
-  //     });
-  //   }
-  // }
 
   static async protect(req, res, next) {
     let token;
@@ -151,7 +170,6 @@ class AuthController {
     }
 
     if (!token) {
-      // console.log(req);
       return res.status(401).json({
         status: "auth-failure",
         error: "You are not logged in! Please log in to get access.",
