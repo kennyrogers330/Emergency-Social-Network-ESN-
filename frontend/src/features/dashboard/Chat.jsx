@@ -1,67 +1,64 @@
-import { useState, useEffect } from 'react'
-import profile from '../../assets/images/profile.png'
-import group from '../../assets/images/group.jpg'
-import Input from '../../components/Input.jsx'
-import Button from '../../components/Button.jsx';
-import { io } from 'socket.io-client'
+import { useState, useEffect } from "react";
+import profile from "../../assets/images/profile.png";
+import group from "../../assets/images/group.jpg";
+import Input from "../../components/Input.jsx";
+import useFetch from "../hooks/useFetch.jsx";
+// import { socket } from '../../utils/sockets.js';
+import io from "socket.io-client";
+import api from "../../utils/api.js";
+import PropTypes from "prop-types";
+import moment from "moment";
 
+const Chat = ({ userData }) => {
+  const socket = io.connect("http://localhost:8000/api/v1/", {
+    autoConnect: false,
+  });
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
 
-import api from '../../utils/api.js'
-
-const Chat = () => {
-  // const room = 'chatbot'
-
-  const socket = io.connect('http://localhost:8000/api/v1/')
-  // socket.emit('join_room', room)
- 
-  const user = [{ id: 1 }]
-
-  const [messages, setMessages] = useState([])
-    const [message, setMessage] = useState()
-
-
+  // load older message.
   useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const response = await api.get("/messages", {});
+        setMessages(response.data.messages.chats);
+        return response.data;
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+        throw err;
+      }
+    };
+
     getMessages();
-    socket.on('receive_message', (data) => {
-      sendMessage(data)
-    })
+
+    socket.on("receive_message", (data) => {
+      sendMessage(data);
+    });
     return () => {
-      socket.off('receive_message')
-    }
-  },[socket])
+      socket.off("receive_message");
+    };
+  }, [socket]);
 
-  const getMessages = async () => {
-    try {
-      const response = await api.get('/messages', {})
-      setMessages(response.data.messages.chats)
-      console.log('here', response.data.messages)
-      return response.data
-    } catch (err) {
-      console.error('Error fetching messages:', err)
-      throw err
-    }
-  }
-
+  // send message to server
   const sendMessage = async (message) => {
     try {
-      const response = await api.post('/messages', { message })
-      console.log('here', response.data)
+      await api.post("/messages", { message });
+      setMessage("");
     } catch (error) {
-      console.error('Error sending message:', error)
+      console.error("Error sending message:", error);
     }
-  }
+  };
   const handleInputChange = (event) => {
-    const { value } = event.target
-    setMessage(value)
-  }
+    const { value } = event.target;
+    setMessage(value);
+  };
 
-  const handleSubmit = async(event) => {
-    event.preventDefault()
-    console.log(message)
-    sendMessage(message)
-  }
-
-
+  // Send the message in the chat when the button is hit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    sendMessage(message);
+    setMessage("");
+  };
 
   return (
     <div className="h-screen flex flex-col">
@@ -81,15 +78,16 @@ const Chat = () => {
             <div key={message._id} className="py-3">
               <div
                 className={`gap-4 ${
-                  message.senderId === user[0].id
-                    ? 'flex flex-row-reverse'
-                    : 'flex'
+                  message.senderId?._id === userData._id
+                    ? "flex flex-row-reverse"
+                    : "flex"
                 }`}
               >
                 <div className="min-w-10 h-10">
                   {index === 0 ||
-                  messages[index - 1].senderId !== message.senderId ? (
-                    <div>
+                  messages[index - 1].senderId?._id !==
+                    message.senderId?._id ? (
+                    <div className="py-2">
                       <img
                         src={profile}
                         alt="user"
@@ -99,16 +97,32 @@ const Chat = () => {
                   ) : null}
                 </div>
 
-                <div>
-                  <p
-                    className={`rounded-xl py-2 px-4 h-[35px] ${
-                      message.senderId === user[0].id
-                        ? 'bg-[#748CF8]'
-                        : 'bg-[#F3F3F3]'
+                <div
+                  className={` flex rounded-xl flex-1 ${
+                    message.senderId?._id === userData._id
+                      ? "justify-end"
+                      : "justify-start"
+                  } `}
+                >
+                  <div
+                    className={`rounded-xl py-2 px-4 w-[60%] flex flex-col relative  ${
+                      message.senderId?._id === userData._id
+                        ? "bg-[#748CF8] text-white"
+                        : "bg-[#F3F3F3]"
                     }`}
                   >
-                    {message.message}
-                  </p>
+                    <div className="font-bold">
+                      <small>
+                        {message.senderId?._id === userData._id
+                          ? "Me"
+                          : `${message.senderId?.username}`}
+                      </small>
+                    </div>
+                    <p className="pb-2">{message.message}</p>
+                    <small className="absolute bottom-1 right-3">
+                      {moment(message.createdAt).format("HH:mm")}
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -138,10 +152,9 @@ const Chat = () => {
             </div>
             <Input placeholder="Type message" onChange={handleInputChange} />
             <div>
-              <Button
+              <button
                 type="submit"
-                className="bg-inherit absolute hover:bg-[#F3F3F3] w-[35px] right-6 bottom-7 shadow-inherit"
-                size={'small'}
+                className="bg-inherit absolute hover:bg-[#F3F3F3] w-[7%] right-5 bottom-8 shadow-inherit"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -155,13 +168,16 @@ const Chat = () => {
                     fill="#748CF8"
                   />
                 </svg>
-              </Button>
+              </button>
             </div>
           </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
+Chat.propTypes = {
+  userData: PropTypes.any.isRequired,
+};

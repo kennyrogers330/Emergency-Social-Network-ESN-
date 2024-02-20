@@ -8,11 +8,11 @@ import Messages from "../features/dashboard/Messages.jsx";
 import { UserContext } from "../context/UserContext.jsx";
 import { logout } from "../services/AuthServices.js";
 
-function Dashboard({ userdata }) {
-  // const { setCurrentUser } = useContext(UserContext);
+function Dashboard() {
+  const { currentUser } = useContext(UserContext);
   // const navigate = useNavigate();
 
-  console.log("userdata:", userdata);
+  console.log("userdata:", currentUser.user);
 
   return (
     <div className="flex justify-center h-full max-h-full">
@@ -20,7 +20,7 @@ function Dashboard({ userdata }) {
         <Messages></Messages>
       </div>
       <div className="w-1/2 max-h-[100vh]">
-        <Chat />
+        <Chat userData={currentUser.user} />
       </div>
       <div className="w-1/4 border-l-2">
         <Member />
