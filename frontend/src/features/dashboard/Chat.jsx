@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import profile from "../../assets/images/profile.png";
 import group from "../../assets/images/group.jpg";
