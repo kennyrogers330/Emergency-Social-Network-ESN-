@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/AuthServices.js';
 import { UserContext } from '../../context/UserContext.jsx';
@@ -15,90 +15,55 @@ const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
 
-  console.log(existingUsers)
-  // const [existingUsers, setExistingUsers] = useState(null);
-
-  // useEffect(() => {
-  //   const users = getExistingUsers()
-  //   setExistingUsers(users)
-  // })
-
   const navigate = useNavigate();
 
-  const tryLogin = () => {    
-    if (username.length < 3 || password.length < 4) {
-      return;
-    }
-    console.log(existingUsers)
-    if (existingUsers.usernames.includes(username)) {
-      return setIsVisible(true)
-    }
-    const handleLogin = async () => {    
-      setSubmitted(true);
-      try {
-        
-        const userData = await login(username, password);
-        if (userData) {
-          setCurrentUser(userData);
-          toast.success('Logged in successfully');
-          navigate('/dashboard', { replace: true });
-          console.log('User logged in:', userData);
+  const handleLogin = async () => {    
+    setSubmitted(true);
+    try {
+      
+      const userData = await login(username, password);
+      if (userData) {
+        setCurrentUser(userData);
+        toast.success('Logged in successfully');
+        navigate('/dashboard', { replace: true });
+        console.log('User logged in:', userData);
+      } else {
+        toast.error('Login failed');
+        throw new Error('Login failed');
+      }
+    } catch (err) {
+      console.error('Error during login:', err);
+      if (!err.message || !err.message.includes('Login failed')) {
+        if (err.response) {
+          toast.error(
+            `Login failed: ${err.response.status} ${err.response.statusText}`,
+          );
         } else {
           toast.error('Login failed');
-          throw new Error('Login failed');
         }
-      } catch (err) {
-        console.error('Error during login:', err);
-        if (!err.message || !err.message.includes('Login failed')) {
-          if (err.response) {
-            toast.error(
-              `Login failed: ${err.response.status} ${err.response.statusText}`,
-            );
-          } else {
-            toast.error('Login failed');
-          }
-        }
-      }  
-    }
-    handleLogin() 
+      }
+    }  
   }
 
-  const handleYesClick = () => {
-    setIsVisible(false);
-    const handleLogin = async () => {    
-      setSubmitted(true);
-      try {
-        
-        const userData = await login(username, password);
-        if (userData) {
-          setCurrentUser(userData);
-          toast.success('Logged in successfully');
-          navigate('/dashboard', { replace: true });
-          console.log('User logged in:', userData);
-        } else {
-          toast.error('Login failed');
-          throw new Error('Login failed');
-        }
-      } catch (err) {
-        console.error('Error during login:', err);
-        if (!err.message || !err.message.includes('Login failed')) {
-          if (err.response) {
-            toast.error(
-              `Login failed: ${err.response.status} ${err.response.statusText}`,
-            );
-          } else {
-            toast.error('Login failed');
-          }
-        }
-      }  
-    }
+  const handleYesClick = () => {        
     handleLogin()
   };
   const handleNoClick = () => {
     setIsVisible(false);
     navigate('/login', { replace: true });
-  };  
+  }
 
+  const tryLogin = () => {    
+    if (username.length < 3 || password.length < 4) {
+      return;
+    }
+    if (existingUsers.usernames.includes(username)) {
+      setIsVisible(false)      
+      handleLogin() 
+    } else {
+      setIsVisible(true);      
+    }
+  }
   
   return (
     <>
