@@ -20,7 +20,17 @@ const AppRoutes = () => {
           currentUser ? (
             <Navigate to="/dashboard" replace key="navigate-dashboard" />
           ) : (
-            <Navigate to="/welcome" replace key="navigate-login" />
+            <Navigate to="/welcome" replace key="welcome-content" />
+          )
+        }
+      />
+      <Route
+        path="/welcome"
+        element={
+          currentUser ? (
+            <Navigate to="/dashboard" replace key="navigate-dashboard" />
+          ) : (
+            <Navigate to="/welcome" replace key="welcome-content" />
           )
         }
       />

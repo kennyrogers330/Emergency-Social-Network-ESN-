@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../services/AuthServices.js';
-import { UserContext } from '../../context/UserContext.jsx';
-import Input from '../../components/Input.jsx';
-import Button from '../../components/Button.jsx';
-import { toast } from 'react-hot-toast';
-import { existingUsers } from '../../services/AuthServices.js';
-import Popup from '../../components/Popup.jsx';
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../services/AuthServices.js";
+import { UserContext } from "../../context/UserContext.jsx";
+import Input from "../../components/Input.jsx";
+import Button from "../../components/Button.jsx";
+import { toast } from "react-hot-toast";
+import { existingUsers } from "../../services/AuthServices.js";
+import Popup from "../../components/Popup.jsx";
 
 const LoginForm = () => {
   const [input, setInput] = useState({ username: "", password: "" });
@@ -15,7 +15,7 @@ const LoginForm = () => {
   const { setCurrentUser } = useContext(UserContext);
 
   const navigate = useNavigate();
-  
+
   const handleChange = (event) => {
     setInput({
       ...input,
@@ -24,11 +24,6 @@ const LoginForm = () => {
   };
 
   const handleLogin = async () => {
-    setSubmitted(true);
-    if (input.username.length < 3 || input.password.length < 4) {
-      return;
-    }
-
     try {
       const userData = await login(input.username, input.password);
       if (userData) {
@@ -50,36 +45,39 @@ const LoginForm = () => {
           toast.error("Password or username is incorrect. Please try again.");
         }
       }
-    }  
-  }
+    }
+  };
 
-  const handleYesClick = () => {        
-    handleLogin()
+  const handleYesClick = () => {
+    handleLogin();
   };
   const handleNoClick = () => {
     setIsVisible(false);
-    navigate('/login', { replace: true });
-  }
+    navigate("/login", { replace: true });
+  };
 
-  const tryLogin = () => {    
+  const tryLogin = () => {
+    setSubmitted(true);
     if (input.username.length < 3 || input.password.length < 4) {
       return;
     }
+
     if (existingUsers.usernames.includes(input.username)) {
-      setIsVisible(false)      
-      handleLogin() 
+      setIsVisible(false);
+      handleLogin();
     } else {
-      setIsVisible(true);      
+      setIsVisible(true);
     }
-  }
-  
+  };
+
   return (
     <>
       <div className="flex flex-col justify-between w-full">
-        <Popup 
+        <Popup
           clickYes={handleYesClick}
           clickNo={handleNoClick}
           visibility={isVisible}
+          username={input.username}
         />
         <Input
           placeholder="Enter Username"

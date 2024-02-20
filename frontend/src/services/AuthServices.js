@@ -2,18 +2,17 @@ import api from "../utils/api";
 
 const API_ENDPOINT = "citizens";
 
-
 export const getExistingUsers = async () => {
   try {
-    const response = await api.get('homepage');
+    const response = await api.get("homepage");
     return response.data;
   } catch (err) {
-    console.error('Error during logout:', err);
+    console.error("Error fetching existing users:", err);
     throw err;
   }
 };
 
-export const existingUsers = await getExistingUsers()
+export const existingUsers = await getExistingUsers();
 
 export const login = async (username, password) => {
   try {
@@ -66,5 +65,3 @@ export const isAuthenticated = () => {
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 };
-
-
