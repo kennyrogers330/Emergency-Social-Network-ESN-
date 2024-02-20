@@ -24,5 +24,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 // MOUNTING ROUTES
 app.use("/api/v1", userRoutes);
 
+app.get("/api/welcome", (req, res) => {
+  res.status(200).json({ message: "welcome" });
+});
 // app.use("/api/v1/messages", ChatInterface);
 export default app;
