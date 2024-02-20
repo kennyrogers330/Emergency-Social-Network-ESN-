@@ -45,7 +45,6 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
   const sendMessage = async (message) => {
     try {
       await api.post("/messages", { message });
-      setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -53,13 +52,22 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
   const handleInputChange = (event) => {
     const { value } = event.target;
     setMessage(value);
+
+    // check if Enter was pressed
+    if (event.key === "Enter" && !event.shiftKey){
+      event.preventDefault();
+      handleSubmit(event);
+    }
   };
 
   // Send the message in the chat when the button is hit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    sendMessage(message);
-    setMessage("");
+    if(message.trim()){
+      sendMessage(message);
+      setMessage("");
+    }
+    
   };
 
   return (
@@ -153,7 +161,7 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
                   />
                 </svg>
               </div>
-              <Input placeholder="Type message" onChange={handleInputChange} />
+              <Input placeholder="Type message" onChange={handleInputChange} onKeyDown={handleInputChange} value={message}/>
               <div>
                 <button
                   type="submit"
