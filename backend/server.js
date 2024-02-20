@@ -6,12 +6,14 @@ import http from "http";
 import Message from "./src/models/message.js";
 import { JoinCommunity, getThisUser, onExit } from "./src/utils/directory.js";
 import { MessageBody } from "./src/utils/chatBody.js";
+import { SocketUtil } from './src/utils/socketUtils.js';
 
 dotenv.config({ path: "./config.env" });
 
 const port = process.env.PORT || 3000;
 
 const httpServer = http.createServer(app);
+SocketUtil.config(httpServer);
 const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:5173",

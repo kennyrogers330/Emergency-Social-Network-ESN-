@@ -46,6 +46,7 @@ class AuthController {
           );
 
           onlineCitizen.password = undefined;
+          req.session.user = onlineCitizen;
           AuthController.sendResponse(res, onlineCitizen, "loged-in");
         }
       } else {
@@ -55,7 +56,9 @@ class AuthController {
           status: "online",
         });
         newCitizen.password = undefined;
+        req.session.user = newCitizen;
         AuthController.sendResponse(res, newCitizen, "signed-up");
+        console.log(newCitizen);
       }
     } catch (err) {
       res.status(400).json({
@@ -98,15 +101,73 @@ class AuthController {
     }
   }
 
+  // static async logout(req, res) {
+  //   try {
+  //     const expireToken = jwt.sign({}, process.env.JWT_SECRET, {
+  //       expiresIn: 1,
+  //     });
+  //     // res.cookie("jwt", "", {
+  //     //   expires: new Date(Date.now() + 10 * 1000),
+  //     //   httpOnly: true,
+  //     // });
+  //     res.cookie("jwt", expireToken, {
+  //       httpOnly: true,
+  //       expires: new Date(Date.now() + 1),
+  //     });
+
+  //    if (req.session) {
+  //      req.session.destroy((err) => {
+  //        if (err) {
+  //          // Handle error
+  //          console.log(err);
+  //          res.status(500).json({ status: "failure", error: err.message });
+  //        } else {
+  //          // Session destroyed
+  //          res.status(200).json({ status: "success" });
+  //        }
+  //      });
+  //    } else {
+  //      res.status(200).json({ status: "success" });
+  //    }
+  //   } catch (err) {
+  //     res.status(400).json({
+  //       status: "auth-failure",
+  //       error: err.message,
+  //     });
+  //   }
+  // }
+
   static async logout(req, res) {
     try {
-      res.cookie("jwt", "", {
-        expires: new Date(Date.now() + 10 * 1000),
-        httpOnly: true,
+      if (!req.session || !req.session.user) {
+        return res.status(401).json({
+          status: "failure",
+          error: "You are not logged in!",
+        });
+      }
+
+      const expireToken = jwt.sign({}, process.env.JWT_SECRET, {
+        expiresIn: 1,
       });
-      res.status(200).json({ status: "success" });
+      res.cookie("jwt", expireToken, {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1),
+      });
+
+      req.session.destroy((err) => {
+        if (err) {
+          console.error(err);
+          return res
+            .status(500)
+            .json({ status: "failure", error: err.message });
+        }
+        return res
+          .status(200)
+          .json({ status: "success", message: "Logged out" });
+      });
     } catch (err) {
-      res.status(400).json({
+      console.error(err);
+      return res.status(400).json({
         status: "auth-failure",
         error: err.message,
       });

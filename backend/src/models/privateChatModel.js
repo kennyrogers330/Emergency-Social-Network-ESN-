@@ -1,8 +1,14 @@
 import mongoose from "mongoose";
 
-const chatSchema = new mongoose.Schema(
+const privateChatSchema = new mongoose.Schema(
   {
     sender_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Citizen",
+      required: true,
+    },
+
+    receiver_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Citizen",
       required: true,
@@ -17,6 +23,6 @@ const chatSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-const Chat = mongoose.model("Chat", chatSchema);
+const PrivateChat = mongoose.model("myChats", privateChatSchema);
 
-export default Chat;
+export default PrivateChat;

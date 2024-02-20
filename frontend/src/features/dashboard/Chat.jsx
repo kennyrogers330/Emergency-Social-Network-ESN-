@@ -1,104 +1,64 @@
-import profile from '../../assets/images/profile.png';
-import group from '../../assets/images/group.jpg';
-import Input from '../../components/Input.jsx';
-//import Button from '../Button.jsx';
+import { useState, useEffect } from "react";
+import profile from "../../assets/images/profile.png";
+import group from "../../assets/images/group.jpg";
+import Input from "../../components/Input.jsx";
+import useFetch from "../hooks/useFetch.jsx";
+// import { socket } from '../../utils/sockets.js';
+import io from "socket.io-client";
+import api from "../../utils/api.js";
+import PropTypes from "prop-types";
+import moment from "moment";
 
-const Chat = () => {
-  const user = [{ id: 1 }];
-  const messages = [
-    {
-      id: 1,
-      senderId: 1,
-      message: 'Hello',
-      createdAt: '12:02',
-    },
-    {
-      id: 2,
-      senderId: 2,
-      message: 'Hey',
-      createdAt: '12:03',
-    },
-    {
-      id: 3,
-      senderId: 1,
-      message: 'Hello',
-      createdAt: '12:02',
-    },
-    {
-      id: 4,
-      senderId: 2,
-      message: 'Hello',
-      createdAt: '12:02',
-    },
-    {
-      id: 5,
-      senderId: 3,
-      message: 'Hello',
-      createdAt: '12:02',
-    },
-    {
-      id: 6,
-      senderId: 3,
-      message: 'How are you doing',
-      createdAt: '12:02',
-    },
-    {
-      id: 7,
-      senderId: 1,
-      message: 'Good',
-      createdAt: '12:02',
-    },
-    {
-      id: 8,
-      senderId: 1,
-      message: 'Good',
-      createdAt: '12:02',
-    },
-    {
-      id: 9,
-      senderId: 1,
-      name: 'Kim',
-      message: 'Good',
-      createdAt: '12:02',
-    },
-    {
-      id: 10,
-      senderId: 1,
-      name: 'Kim',
-      message: 'Good',
-      createdAt: '12:02',
-    },
-    {
-      id: 11,
-      senderId: 3,
-      message: 'How are you doing',
-      createdAt: '12:02',
-    },
-    {
-      id: 12,
-      senderId: 1,
-      message: 'How are you doing',
-      createdAt: '12:02',
-    },
-    {
-      id: 13,
-      senderId: 2,
-      message: 'How are you doing',
-      createdAt: '12:02',
-    },
-    {
-      id: 14,
-      senderId: 3,
-      message: 'How are you doing',
-      createdAt: '12:02',
-    },
-    {
-      id: 15,
-      senderId: 1,
-      message: 'How are you doing. My name is Innocent Ingabire and I am a student at CMU. I am happy to be here',
-      createdAt: '12:02',
-    },
-  ];
+const Chat = ({ userData }) => {
+  const socket = io.connect("http://localhost:8000/api/v1/", {
+    autoConnect: false,
+  });
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
+
+  // load older message.
+  useEffect(() => {
+    const getMessages = async () => {
+      try {
+        const response = await api.get("/messages", {});
+        setMessages(response.data.messages.chats);
+        return response.data;
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+        throw err;
+      }
+    };
+
+    getMessages();
+
+    socket.on("receive_message", (data) => {
+      sendMessage(data);
+    });
+    return () => {
+      socket.off("receive_message");
+    };
+  }, [socket]);
+
+  // send message to server
+  const sendMessage = async (message) => {
+    try {
+      await api.post("/messages", { message });
+      setMessage("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    setMessage(value);
+  };
+
+  // Send the message in the chat when the button is hit
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    sendMessage(message);
+    setMessage("");
+  };
 
   return (
     <div className="h-screen flex flex-col">
@@ -115,18 +75,19 @@ const Chat = () => {
       <div className="flex-1 overflow-y-auto chat-messages">
         <div className="flex flex-col justify-end px-5">
           {messages.map((message, index) => (
-            <div key={message.id} className="py-3">
+            <div key={message._id} className="py-3">
               <div
                 className={`gap-4 ${
-                  message.senderId === user[0].id
-                    ? 'flex flex-row-reverse'
-                    : 'flex'
+                  message.senderId?._id === userData._id
+                    ? "flex flex-row-reverse"
+                    : "flex"
                 }`}
               >
                 <div className="min-w-10 h-10">
                   {index === 0 ||
-                  messages[index - 1].senderId !== message.senderId ? (
-                    <div>
+                  messages[index - 1].senderId?._id !==
+                    message.senderId?._id ? (
+                    <div className="py-2">
                       <img
                         src={profile}
                         alt="user"
@@ -136,16 +97,32 @@ const Chat = () => {
                   ) : null}
                 </div>
 
-                <div>
-                  <p
-                    className={`rounded-xl py-2 px-4 h-[35px] ${
-                      message.senderId === user[0].id
-                        ? 'bg-[#748CF8]'
-                        : 'bg-[#F3F3F3]'
+                <div
+                  className={` flex rounded-xl flex-1 ${
+                    message.senderId?._id === userData._id
+                      ? "justify-end"
+                      : "justify-start"
+                  } `}
+                >
+                  <div
+                    className={`rounded-xl py-2 px-4 w-[60%] flex flex-col relative  ${
+                      message.senderId?._id === userData._id
+                        ? "bg-[#748CF8] text-white"
+                        : "bg-[#F3F3F3]"
                     }`}
                   >
-                    {message.message}
-                  </p>
+                    <div className="font-bold">
+                      <small>
+                        {message.senderId?._id === userData._id
+                          ? "Me"
+                          : `${message.senderId?.username}`}
+                      </small>
+                    </div>
+                    <p className="pb-2">{message.message}</p>
+                    <small className="absolute bottom-1 right-3">
+                      {moment(message.createdAt).format("HH:mm")}
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -154,7 +131,7 @@ const Chat = () => {
       </div>
 
       <div className="relative flex-none">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="flex p-5 justify-between">
             <div className="flex justify-center align-middle p-3">
               <svg
@@ -173,12 +150,11 @@ const Chat = () => {
                 />
               </svg>
             </div>
-            <Input placeholder="Type message" />
+            <Input placeholder="Type message" onChange={handleInputChange} />
             <div>
-              {/* <Button
+              <button
                 type="submit"
-                className="bg-inherit absolute hover:bg-[#F3F3F3] w-[35px] right-6 bottom-7 shadow-inherit"
-                size={'small'}
+                className="bg-inherit absolute hover:bg-[#F3F3F3] w-[7%] right-5 bottom-8 shadow-inherit"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -192,7 +168,7 @@ const Chat = () => {
                     fill="#748CF8"
                   />
                 </svg>
-              </Button> */}
+              </button>
             </div>
           </div>
         </form>
@@ -202,3 +178,6 @@ const Chat = () => {
 };
 
 export default Chat;
+Chat.propTypes = {
+  userData: PropTypes.any.isRequired,
+};
