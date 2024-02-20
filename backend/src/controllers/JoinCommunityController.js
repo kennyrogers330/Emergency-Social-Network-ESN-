@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import APIFeatures from "../utils/apiFeatures.js";
 
 class AuthController {
+  static currentUser = ""
+
   static sendResponse(res, user, status) {
     const id = user._id;
     const token = jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -25,9 +27,13 @@ class AuthController {
     });
   }
 
+  
+
   static async Signup(req, res, next) {
+    
     try {
       const { username, password } = req.body;
+      AuthController.currentUser = username
       const user = await Citizen.findOne({ username });
 
       if (user) {
@@ -101,42 +107,6 @@ class AuthController {
     }
   }
 
-  // static async logout(req, res) {
-  //   try {
-  //     const expireToken = jwt.sign({}, process.env.JWT_SECRET, {
-  //       expiresIn: 1,
-  //     });
-  //     // res.cookie("jwt", "", {
-  //     //   expires: new Date(Date.now() + 10 * 1000),
-  //     //   httpOnly: true,
-  //     // });
-  //     res.cookie("jwt", expireToken, {
-  //       httpOnly: true,
-  //       expires: new Date(Date.now() + 1),
-  //     });
-
-  //    if (req.session) {
-  //      req.session.destroy((err) => {
-  //        if (err) {
-  //          // Handle error
-  //          console.log(err);
-  //          res.status(500).json({ status: "failure", error: err.message });
-  //        } else {
-  //          // Session destroyed
-  //          res.status(200).json({ status: "success" });
-  //        }
-  //      });
-  //    } else {
-  //      res.status(200).json({ status: "success" });
-  //    }
-  //   } catch (err) {
-  //     res.status(400).json({
-  //       status: "auth-failure",
-  //       error: err.message,
-  //     });
-  //   }
-  // }
-
   static async logout(req, res) {
     try {
       if (!req.session || !req.session.user) {
@@ -153,6 +123,18 @@ class AuthController {
         httpOnly: true,
         expires: new Date(Date.now() + 1),
       });
+
+      const user = await Citizen.findOneAndUpdate(
+        { username: AuthController.currentUser },
+        { $set: { status: "offline" } },
+        { new: true } 
+      );
+
+      if (!user) {
+        console.log("User not found");
+      } else {
+        console.log("User status set to offline");
+      }
 
       req.session.destroy((err) => {
         if (err) {
@@ -173,32 +155,6 @@ class AuthController {
       });
     }
   }
-
-  // static async protect(req, res, next) {
-  //   let token;
-  //   if (
-  //     req.headers.authorization &&
-  //     req.headers.authorization.startsWith("Bearer")
-  //   ) {
-  //     token = req.headers.authorization.split(" ")[1];
-  //   }
-  //   // else if (req.cookies.jwt) {
-  //   //   token = req.cookies.jwt;
-  //   // }
-  //   console.log(req.headers.authorization);
-  //   if (!token) {
-  //     // console.log(req);
-  //     return res.status(401).json({
-  //       status: "auth-failure",
-  //       error: "You are not logged in! Please log in to get access.",
-  //     });
-  //   } else {
-  //     return res.status(401).json({
-  //       status: "success",
-  //       error: "You are not logged in! Please log in to get access.",
-  //     });
-  //   }
-  // }
 
   static async protect(req, res, next) {
     let token;
