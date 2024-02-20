@@ -5,24 +5,21 @@ import Member from "./Member.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { logout } from "../../services/AuthServices.js";
 import { existingUsers } from "../../services/AuthServices.js";
+import { toast } from "react-hot-toast";
 
 function MembersDirectory({ toggleMember, visibility }) {
   const { setCurrentUser } = useContext(UserContext);
-
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       await logout();
       setCurrentUser(null);
-      navigate("/login", { replace: true });
       toast.success("Logged out successfully");
+      navigate("/login", { replace: true });
     } catch (e) {
       console.error("Error during logout:", e);
     }
   };
-
-  console.log("====================================");
-  console.log(existingUsers.citizens);
-  console.log("====================================");
 
   return (
     <div className="flex flex-col h-screen">

@@ -24,16 +24,6 @@ const AppRoutes = () => {
           )
         }
       />
-      <Route
-        path="/welcome"
-        element={
-          currentUser ? (
-            <Navigate to="/dashboard" replace key="navigate-dashboard" />
-          ) : (
-            <Navigate to="/welcome" replace key="welcome-content" />
-          )
-        }
-      />
       <Route element={<PrivateRoutes />}>
         <Route
           path="/dashboard"
