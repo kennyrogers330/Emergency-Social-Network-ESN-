@@ -47,13 +47,34 @@ export class ChatController {
 
   static async getPrivateChats(req, res) {
     try {
-      const chats = await ChatService.getPrivateChatsForUser(req.user.id);
+      const otherUserId = req.params.id;
+      const chats = await ChatService.getPrivateChatsBetweenUsers(
+        req.user.id,
+        otherUserId,
+      );
 
       return res.status(200).json({ message: "Fetched private chats", chats });
     } catch (err) {
       return res.status(500).json({
         error: err.message,
         message: "Failed to fetch private chats",
+      });
+    }
+  }
+
+  static async getConversationWithUser(req, res) {
+    try {
+      const otherUserId = req.params.id;
+      const chats = await ChatService.getPrivateChatsBetweenUsers(
+        req.user.id,
+        otherUserId,
+      );
+
+      return res.status(200).json({ message: "Fetched conversation", chats });
+    } catch (err) {
+      return res.status(500).json({
+        error: err.message,
+        message: "Failed to fetch conversation",
       });
     }
   }

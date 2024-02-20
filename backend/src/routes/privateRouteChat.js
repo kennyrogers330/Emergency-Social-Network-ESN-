@@ -6,7 +6,14 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(AuthController.protect, ChatController.getPrivateChats)
   .post(AuthController.protect, ChatController.setPrivateMessage);
+
+router
+  .route("/:id")
+  .get(AuthController.protect, ChatController.getPrivateChats);
+
+router
+  .route("/conversation/:id")
+  .get(AuthController.protect, ChatController.getConversationWithUser);
 
 export default router;

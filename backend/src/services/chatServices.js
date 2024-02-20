@@ -12,9 +12,12 @@ export class ChatService {
     return myChat;
   }
 
-  static async getPrivateChatsForUser(userId) {
+  static async getPrivateChatsBetweenUsers(userId, otherUserId) {
     const chats = await PrivateChat.find({
-      $or: [{ sender_id: userId }, { receiver_id: userId }],
+      $or: [
+        { $and: [{ sender_id: userId }, { receiver_id: otherUserId }] },
+        { $and: [{ sender_id: otherUserId }, { receiver_id: userId }] },
+      ],
     })
       .populate("sender_id", "username")
       .populate("receiver_id", "username")
@@ -22,7 +25,6 @@ export class ChatService {
 
     return chats;
   }
-
   static async getOneChat(id) {
     const newChat = await ChatMessage.findById(id)
       .populate({
