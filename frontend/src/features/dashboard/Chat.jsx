@@ -9,7 +9,7 @@ import api from "../../utils/api.js";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-const Chat = ({ userData }) => {
+const Chat = ({ userData, toggleChat, visibilityChat }) => {
   const socket = io.connect("http://localhost:8000/api/v1/", {
     autoConnect: false,
   });
@@ -61,7 +61,8 @@ const Chat = ({ userData }) => {
   };
 
   return (
-    <div className="h-screen flex flex-col">
+    <> {visibilityChat && ( 
+    <div className={`h-screen flex flex-col`} >
       <div className="flex-none">
         <div className="w-full flex gap-4 justify-between py-4 px-5 border-b">
           <img src={group} alt="Img" className="w-10 h-10 rounded-lg" />
@@ -174,6 +175,8 @@ const Chat = ({ userData }) => {
         </form>
       </div>
     </div>
+    )}
+    </>
   );
 };
 

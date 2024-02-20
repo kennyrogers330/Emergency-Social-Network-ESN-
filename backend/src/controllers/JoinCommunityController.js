@@ -168,7 +168,6 @@ class AuthController {
     }
 
     if (!token) {
-      // console.log(req);
       return res.status(401).json({
         status: "auth-failure",
         error: "You are not logged in! Please log in to get access.",
