@@ -63,8 +63,14 @@
 /**
  * @swagger
  * tags:
- *   name: Chats
+ *   name: Messages
  *   description: API for managing chat messages.
+ */
+/**
+ * @swagger
+ * tags:
+ *  name: Statuses
+ *  description: API for share status.
  */
 
 /**
@@ -163,10 +169,10 @@
  *            application/json:
  *              schema:
  *                type: object
- * /chats:
+ * /api/v1/messages:
  *    post:
  *      summary: Chat publicly. The citizen can send a chat to the community.
- *      tags: [chats]
+ *      tags: [Messages]
  *      requestBody:
  *         content:
  *             application/json:
@@ -207,11 +213,11 @@
  *              schema:
  *                type: object
  *    get:
- *      summary: Get all Chats. After joining the community, Chats can see themself listed in the directory, along with other Chats.
- *      tags: [Chats]
+ *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
+ *      tags: [messages]
  *      responses:
  *         200:
- *           description: A list of Chats
+ *           description: A list of messages
  *           content:
  *            application/json:
  *              schema:
@@ -243,15 +249,3 @@
  *              schema:
  *                type: object
  */
-
-// import express from "express";
-// const router = express.Router();
-// // const passport = require('../middlewares/passport-config');
-
-// // import {joinCommunity, getCitizens} from "../controllers/userController.js";
-
-// // // Handle register
-// // router.post("/citizens", joinCommunity);
-// // router.get("/citizens", getCitizens)
-
-// export default router;

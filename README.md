@@ -27,7 +27,7 @@ Follw below steps to run the frontend application:
 git clone git@github.com:cmusv-fse2/fse-rw-s24-rw1.git   // This requires SSH keys already setup.
 cd fse-rw-s24-rw1/frontend
 npm install
-npm start
+npm run dev
 ```
 
 <br>
@@ -45,12 +45,12 @@ npm start
 After the backend application has started, the API documentation is accessible on:
 
 ```
-http://<IP>:8000/api-docs or http://localhost:8000/api-docs
+http://<IP>:8000/api/v1/api-documentation or http://localhost:8000/api/v1/api-documentation
 ```
 
 This is the [ArchitectureHaiku](https://drive.google.com/file/d/1Kf4iAK2ZxRx-xaOla8Gzc3Zp4eab_RSz/view?usp=sharing) of the application.
 
-These are the [OOA](https://drive.google.com/drive/folders/1QYbNo5MVT-xAb20jrhZuO55uX4Av0nWW) for use cases `Join a community` and `Chat Publicly`.
+These are the [OOA](https://drive.google.com/drive/u/4/folders/1qZAIoiFOXOn6Xd-clovOkOo-aDIpnfJG) for use cases `Join a community` and `Chat Publicly`.
 
 <!-- These are the [SequenceDiagrams](https://docs.google.com/document/d/1VFcpOEG1Exxgjf78wP2nl9l7Kc4ffG-Qa23HQuFMWpY/edit) for use cases `Join a community` and `Chat Publicly`.
 
