@@ -35,7 +35,7 @@ app.use(
 
 // Swagger setup
 const specs = swaggerJsdoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+app.use("/api/v1/api-documentation", swaggerUi.serve, swaggerUi.setup(specs));
 
 // MOUNTING ROUTES
 app.use("/api/v1", userRoutes);

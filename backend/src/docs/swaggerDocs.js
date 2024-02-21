@@ -30,26 +30,58 @@
  *      ApiChat:
  *        type: object
  *        properties:
- *          username:
- *            type: string
  *          message:
  *            type: string
- *          timestamp:
- *            type: string
- *          statusMessage:
+ *          createdAt:
  *            type: string
  *      ApiChatResponse:
  *        type: object
  *        properties:
  *          _id:
- *            type:string
+ *            type: string
+ *          username:
+ *            type: string
+ *          message:
+ *            type: string
+ *          timestamps:
+ *            type: string
+ *      ApiChatPrivate:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: string
+ *          createdAt:
+ *            type: string
+ *      ApiChatPrivateResponse:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
  *          username:
  *            type: string
  *          message:
  *            type: string
  *          timestamp:
  *            type: string
- *          statusMessage:
+ *       ShareStatus:
+ *        type: object
+ *        properties:
+ *          status:
+ *            type: string
+ *          explanation:
+ *            type: string
+ *          color:
+ *            type: string
+ *      ShareStatusResponse:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *          status:
+ *            type: string
+ *          explanation:
+ *            type: string
+ *          color:
  *            type: string
  *
  */
@@ -248,4 +280,164 @@
  *            application/json:
  *              schema:
  *                type: object
+ * /api/v1/message:
+ *    post:
+ *      summary: Chat Privately. The citizen can send a private chat to another citizen.
+ *      tags: [Messages]
+ *      requestBody:
+ *         content:
+ *             application/json:
+ *                schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/ApiChatPrivate'
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatPrivateResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * /api/v1/message/id
+ *    get:
+ *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
+ *      tags: [messages]
+ *      responses:
+ *         200:
+ *           description: A list of messages
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatPrivateResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * /api/v1/statuses:
+ *    post:
+ *      summary: ShareStatus. The citizen can share a status.
+ *      tags: [Messages]
+ *      requestBody:
+ *         content:
+ *             application/json:
+ *                schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/ShareStatus'
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ShareStatusResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *    get:
+ *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
+ *      tags: [messages]
+ *      responses:
+ *         200:
+ *           description: A list of messages
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ShareStatusResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * 
  */
