@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import profile from "../../assets/images/profile.png";
 import group from "../../assets/images/group.jpg";
@@ -9,7 +11,7 @@ import api from "../../utils/api.js";
 import PropTypes from "prop-types";
 import moment from "moment";
 
-const Chat = ({ userData, toggleChat, visibilityChat }) => {
+const Chat = ({ userData, toggleChat, visibilityChat}) => {
   const socket = io.connect("http://localhost:8000/api/v1/", {
     autoConnect: false,
   });
@@ -43,7 +45,6 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
   const sendMessage = async (message) => {
     try {
       await api.post("/messages", { message });
-      setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
@@ -51,18 +52,28 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
   const handleInputChange = (event) => {
     const { value } = event.target;
     setMessage(value);
+
+    // check if Enter was pressed
+    if (event.key === "Enter" && !event.shiftKey){
+      event.preventDefault();
+      handleSubmit(event);
+    }
   };
 
   // Send the message in the chat when the button is hit
   const handleSubmit = async (event) => {
     event.preventDefault();
-    sendMessage(message);
-    setMessage("");
+    if(message.trim()){
+      sendMessage(message);
+      setMessage("");
+    }
+    
   };
 
   return (
     <>
       <div className={`h-screen flex flex-col`}>
+       
         <div className="flex-none">
           <div className="w-full flex gap-4 justify-between py-4 px-5 border-b">
             <img src={group} alt="Img" className="w-10 h-10 rounded-lg" />
@@ -151,7 +162,7 @@ const Chat = ({ userData, toggleChat, visibilityChat }) => {
                   />
                 </svg>
               </div>
-              <Input placeholder="Type message" onChange={handleInputChange} />
+              <Input placeholder="Type message" onChange={handleInputChange} onKeyDown={handleInputChange} value={message}/>
               <div>
                 <button
                   type="submit"

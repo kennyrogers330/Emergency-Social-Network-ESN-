@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import group from '../../assets/images/group.jpg';
 
-const Contact = () => {
+const Contact = ({name, isPublic}) => {
   return (
     <div className="px-5 py-3">
       <div className="flex py-2 px-2 gap-4 rounded-lg bg-[#E7ECF0]">
@@ -9,8 +10,11 @@ const Contact = () => {
         </div>
         <div className="flex flex-1 justify-between">
           <div>
-            <p> CMU FSE Community </p>
-            <p className="text-[12px] text-opacity-40">12 members</p>
+            <p> {name} </p>
+            {
+              isPublic ? <p className="text-[12px] text-opacity-40">12 members</p>: ''
+            }
+            
             <div className="gap-1">
               <span className="rounded-xl text-[10px] text-[#6A7FE2] bg-[#D4DBFD] px-2 py-1">
                 online
