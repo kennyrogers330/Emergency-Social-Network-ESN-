@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import Input from '../../components/Input.jsx';
 import Contact from './Contact.jsx';
+import { existingUsers } from "../../services/AuthServices.js";
 
-function Messages() {
+function Messages({onChatSelect}) {
   return (
     <>
-      <div className="flex flex-col">
+    <div className="flex flex-col h-screen">
+      <div className="flex flex-col flex-grow overflow-auto">
         <div className="py-5 px-5 border-b">
-          <div className="flex justify-between font-sans">
-            <div className="flex font-semibold text-sm">
+          <div className="flex justify-between font-sans ">
+            <div className="flex font-semibold text-sm ">
               <span className="font-bold">Messages</span>
               <span className="p-1">
                 <svg
@@ -46,7 +49,17 @@ function Messages() {
         <div className="px-5 py-4">
           <Input className="bg=[#F3F3F3]" placeholder="Search messages" />
         </div>
-        <Contact />
+        <Contact name="FSE Community" isPublic={true}></Contact>
+        {existingUsers.citizens.map((contact) => (
+          <div
+            key={contact.id}
+            onClick={() => onChatSelect(contact.id)}
+            className="cursor-pointer"
+          >
+            <Contact name={contact.username} />
+          </div>
+        ))}
+      </div>
       </div>
     </>
   );
