@@ -462,7 +462,7 @@
  * /api/v1/speedtest:
  *    post:
  *      summary: To test the performance of the system.
- *      tags: [SpeedTest]
+ *      tags: [Tests]
  *      requestBody:
  *         content:
  *             application/json:
@@ -504,7 +504,7 @@
  *                type: object
  *    get:
  *      summary: To test the performance of the system.
- *      tags: [Test]
+ *      tags: [Tests]
  *      parameters:
  *       - name: id
  *         in: path
