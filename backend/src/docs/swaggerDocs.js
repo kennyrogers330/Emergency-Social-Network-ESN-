@@ -61,7 +61,7 @@
  *            type: string
  *          message:
  *            type: string
- *          timestamp:
+ *          createdAt:
  *            type: string
  *      ShareStatus:
  *        type: object
@@ -82,6 +82,18 @@
  *          explanation:
  *            type: string
  *          color:
+ *            type: string
+ *      SpeedTest:
+ *        type: object
+ *        properties:      
+ *          testPayload:
+ *            type: string
+ *      SpeedTestResponse:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *          testPayload:
  *            type: string
  *
  */
@@ -107,6 +119,13 @@
 
 /**
  * @swagger
+ * tags:
+ *  name: Tests
+ *  description: API for different testings.
+ */
+
+/**
+ * @swagger
  * /api/v1/citizens:
  *    get:
  *      summary: Get all citizens. After joining the community, citizens can see themself listed in the directory, along with other citizens.
@@ -115,17 +134,13 @@
  *       - name: sort
  *         in: path
  *         description: Sort the results by status and username
- *         required: true
  *         schema:
  *           type: string
- *         example: -status,username
  *       - name: fields
  *         in: path
  *         description: Specify which fields to include in the response
- *         required: true
  *         schema:
  *           type: string
- *         example: username,status
  *      responses:
  *         200:
  *           description: A list of Citizens
@@ -245,8 +260,8 @@
  *              schema:
  *                type: object
  *    get:
- *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
- *      tags: [messages]
+ *      summary: Get all messages. Once a citizen choose to chat publicly, the previous messages should be seen.
+ *      tags: [Messages]
  *      responses:
  *         200:
  *           description: A list of messages
@@ -323,10 +338,15 @@
  *            application/json:
  *              schema:
  *                type: object
- * /api/v1/message/id:
- *    post:
+ *    get:
  *      summary: Get a message.
  *      tags: [Messages]
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         description: This is the ID of the user
+ *         schema:
+ *           type: string
  *      responses:
  *         200:
  *           description: Ok
@@ -363,7 +383,7 @@
  * /api/v1/statuses:
  *    post:
  *      summary: ShareStatus. The citizen can share a status.
- *      tags: [Messages]
+ *      tags: [Statuses]
  *      requestBody:
  *         content:
  *             application/json:
@@ -404,8 +424,8 @@
  *              schema:
  *                type: object
  *    get:
- *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
- *      tags: [messages]
+ *      summary: Get all statuses. 
+ *      tags: [Statuses]
  *      responses:
  *         200:
  *           description: A list of messages
@@ -415,6 +435,91 @@
  *                type: array
  *                items:
  *                  $ref: '#components/schemas/ShareStatusResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * /api/v1/speedtest:
+ *    post:
+ *      summary: To test the performance of the system.
+ *      tags: [SpeedTest]
+ *      requestBody:
+ *         content:
+ *             application/json:
+ *                schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/SpeedTest'
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/SpeedTestResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *    get:
+ *      summary: To test the performance of the system.
+ *      tags: [SpeedTest]
+ *      parameters:
+ *       - name: id
+ *         in: path
+ *         description: This is the ID of the user
+ *         schema:
+ *           type: string
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatPrivateResponse'
  *         400:
  *           description: Bad Request
  *           content:
