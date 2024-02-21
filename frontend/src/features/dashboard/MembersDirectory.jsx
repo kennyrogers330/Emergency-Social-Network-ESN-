@@ -24,6 +24,16 @@ function MembersDirectory({ toggleMember, visibility }) {
     }
   };
 
+  const sortedUsers = existingUsers.citizens.sort((a, b) => {
+    if (a.status === 'online' && b.status !== 'online') {
+      return -1;
+    } else if (a.status !== 'online' && b.status === 'online') {
+      return 1;
+    } else {
+      return a.username.localeCompare(b.username);
+    }
+  });
+
   return (
     <div className="flex flex-col h-screen">
       <div className="flex flex-col flex-grow overflow-auto">
@@ -53,7 +63,7 @@ function MembersDirectory({ toggleMember, visibility }) {
             <div className="mr-2">Group Members</div>
             <div className="mr-2">{existingUsers.citizens.length}</div>
           </div>
-          {existingUsers.citizens.map((user) => {
+          {sortedUsers.map((user) => {
             return <Member member={user.username} status={user.status} />;
           })}
         </div>
