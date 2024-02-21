@@ -53,7 +53,9 @@ export class ChatController {
         otherUserId,
       );
 
-      return res.status(200).json({ message: "Fetched private chats", chats });
+      return res
+        .status(200)
+        .json({ message: "Fetched private chats", count: chats.length, chats });
     } catch (err) {
       return res.status(500).json({
         error: err.message,
@@ -62,22 +64,42 @@ export class ChatController {
     }
   }
 
-  static async getConversationWithUser(req, res) {
+  static async getAllChatsForUser(req, res) {
     try {
-      const otherUserId = req.params.id;
-      const chats = await ChatService.getPrivateChatsBetweenUsers(
-        req.user.id,
-        otherUserId,
-      );
+      const chats = await ChatService.getAllChatsOfUser(req.user.id);
 
-      return res.status(200).json({ message: "Fetched conversation", chats });
+      return res
+        .status(200)
+        .json({ status: "success", count: chats.length, chats });
     } catch (err) {
-      return res.status(500).json({
-        error: err.message,
-        message: "Failed to fetch conversation",
-      });
+      return res
+        .status(500)
+        .json({
+          status: "error",
+          error: err.message,
+          message: "Failed to fetch chats",
+        });
     }
   }
+
+  // static async getConversationWithUser(req, res) {
+  //   try {
+  //     const otherUserId = req.params.id;
+  //     const chats = await ChatService.getPrivateChatsBetweenUsers(
+  //       req.user.id,
+  //       otherUserId,
+  //     );
+
+  //     return res
+  //       .status(200)
+  //       .json({ message: "Fetched conversation", count: chats.length, chats });
+  //   } catch (err) {
+  //     return res.status(500).json({
+  //       error: err.message,
+  //       message: "Failed to fetch conversation",
+  //     });
+  //   }
+  // }
 
   static async getMessages(req, res) {
     try {
