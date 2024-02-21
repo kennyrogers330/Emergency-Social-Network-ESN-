@@ -30,26 +30,58 @@
  *      ApiChat:
  *        type: object
  *        properties:
- *          username:
- *            type: string
  *          message:
  *            type: string
- *          timestamp:
- *            type: string
- *          statusMessage:
+ *          createdAt:
  *            type: string
  *      ApiChatResponse:
  *        type: object
  *        properties:
  *          _id:
- *            type:string
+ *            type: string
+ *          username:
+ *            type: string
+ *          message:
+ *            type: string
+ *          timestamps:
+ *            type: string
+ *      ApiChatPrivate:
+ *        type: object
+ *        properties:
+ *          message:
+ *            type: string
+ *          createdAt:
+ *            type: string
+ *      ApiChatPrivateResponse:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
  *          username:
  *            type: string
  *          message:
  *            type: string
  *          timestamp:
  *            type: string
- *          statusMessage:
+ *      ShareStatus:
+ *        type: object
+ *        properties:
+ *          status:
+ *            type: string
+ *          explanation:
+ *            type: string
+ *          color:
+ *            type: string
+ *      ShareStatusResponse:
+ *        type: object
+ *        properties:
+ *          _id:
+ *            type: string
+ *          status:
+ *            type: string
+ *          explanation:
+ *            type: string
+ *          color:
  *            type: string
  *
  */
@@ -63,8 +95,14 @@
 /**
  * @swagger
  * tags:
- *   name: Chats
+ *   name: Messages
  *   description: API for managing chat messages.
+ */
+/**
+ * @swagger
+ * tags:
+ *  name: Statuses
+ *  description: API for share status.
  */
 
 /**
@@ -163,10 +201,10 @@
  *            application/json:
  *              schema:
  *                type: object
- * /chats:
+ * /api/v1/messages:
  *    post:
  *      summary: Chat publicly. The citizen can send a chat to the community.
- *      tags: [chats]
+ *      tags: [Messages]
  *      requestBody:
  *         content:
  *             application/json:
@@ -207,11 +245,11 @@
  *              schema:
  *                type: object
  *    get:
- *      summary: Get all Chats. After joining the community, Chats can see themself listed in the directory, along with other Chats.
- *      tags: [Chats]
+ *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
+ *      tags: [messages]
  *      responses:
  *         200:
- *           description: A list of Chats
+ *           description: A list of messages
  *           content:
  *            application/json:
  *              schema:
@@ -242,16 +280,164 @@
  *            application/json:
  *              schema:
  *                type: object
+ * /api/v1/message:
+ *    post:
+ *      summary: Chat Privately. The citizen can send a private chat to another citizen.
+ *      tags: [Messages]
+ *      requestBody:
+ *         content:
+ *             application/json:
+ *                schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/ApiChatPrivate'
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatPrivateResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * /api/v1/message/id:
+ *    post:
+ *      summary: Get a message.
+ *      tags: [Messages]
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ApiChatPrivateResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * /api/v1/statuses:
+ *    post:
+ *      summary: ShareStatus. The citizen can share a status.
+ *      tags: [Messages]
+ *      requestBody:
+ *         content:
+ *             application/json:
+ *                schema:
+ *                 items:
+ *                   $ref: '#/components/schemas/ShareStatus'
+ *      responses:
+ *         200:
+ *           description: Ok
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ShareStatusResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *    get:
+ *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
+ *      tags: [messages]
+ *      responses:
+ *         200:
+ *           description: A list of messages
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: array
+ *                items:
+ *                  $ref: '#components/schemas/ShareStatusResponse'
+ *         400:
+ *           description: Bad Request
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         401:
+ *           description: Unauthorized
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         404:
+ *           description: Not Found
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *         500:
+ *           description: Internal Server Error
+ *           content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ * 
  */
-
-// import express from "express";
-// const router = express.Router();
-// // const passport = require('../middlewares/passport-config');
-
-// // import {joinCommunity, getCitizens} from "../controllers/userController.js";
-
-// // // Handle register
-// // router.post("/citizens", joinCommunity);
-// // router.get("/citizens", getCitizens)
-
-// export default router;
