@@ -19,6 +19,7 @@ function MembersDirectory({ toggleMember, visibility }) {
       setCurrentUser(null);
       toast.success("Logged out successfully");
       navigate("/login", { replace: true });
+      window.location.reload();
     } catch (e) {
       console.error("Error during logout:", e);
     }
@@ -39,7 +40,7 @@ function MembersDirectory({ toggleMember, visibility }) {
       <div className="flex flex-col flex-grow overflow-auto">
         <div className="py-5 px-5 border-b fixed top-0 w-full bg-white">
           <div className="flex justify-between font-sans">
-            <div>Group Directory</div>
+            <div>Citizen Directory</div>
             <div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +61,7 @@ function MembersDirectory({ toggleMember, visibility }) {
         </div>
         <div className="ml-3 mt-20 mb-4">
           <div className="flex justify-start font-semibold">
-            <div className="mr-2">Group Members</div>
+            <div className="mr-2">Citizens</div>
             <div className="mr-2">{existingUsers.citizens.length}</div>
           </div>
           {sortedUsers.map((user) => {

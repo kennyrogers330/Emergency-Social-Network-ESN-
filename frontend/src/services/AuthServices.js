@@ -14,11 +14,12 @@ export const getExistingUsers = async () => {
 
 export const existingUsers = await getExistingUsers();
 
-export const login = async (username, password) => {
+export const login = async (username, password, status) => {
   try {
     const response = await api.post(API_ENDPOINT, {
       username,
       password,
+      status
     });
     const token = response.data.token;
     if (token) {
