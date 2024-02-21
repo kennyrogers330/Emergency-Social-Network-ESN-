@@ -63,7 +63,7 @@
  *            type: string
  *          timestamp:
  *            type: string
- *       ShareStatus:
+ *      ShareStatus:
  *        type: object
  *        properties:
  *          status:
@@ -323,13 +323,13 @@
  *            application/json:
  *              schema:
  *                type: object
- * /api/v1/message/id
- *    get:
- *      summary: Get all messages. After joining the community, messages can see themself listed in the directory, along with other messages.
- *      tags: [messages]
+ * /api/v1/message/id:
+ *    post:
+ *      summary: Get a message.
+ *      tags: [Messages]
  *      responses:
  *         200:
- *           description: A list of messages
+ *           description: Ok
  *           content:
  *            application/json:
  *              schema:
