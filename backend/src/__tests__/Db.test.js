@@ -1,9 +1,9 @@
-import supertest from "supertest";
-import app from "./../../app.js"; // Assuming your server file is named app.js
+import { connect } from "../config/inMemoryDB.js";
 
-describe("GET /", () => {
-  it("responds with status 200", async () => {
-    const response = await supertest(app).get("/api/welcome");
-    expect(response.statusCode).toBe(200);
+describe("connecting to DB", () => {
+  it("responds", async () => {
+    const conn = await connect();
+
+    expect(conn).toBe(true);
   });
 });

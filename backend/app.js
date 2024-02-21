@@ -42,8 +42,4 @@ app.use("/api/v1", userRoutes);
 app.use("/api/v1/messages", chatRoutes);
 app.use("/api/v1/message", privateRoute);
 
-app.get("/api/welcome", (req, res) => {
-  res.status(200).json({ message: "welcome" });
-});
-// app.use("/api/v1/messages", ChatInterface);
 export default app;
