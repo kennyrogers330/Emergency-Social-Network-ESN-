@@ -504,7 +504,7 @@
  *                type: object
  *    get:
  *      summary: To test the performance of the system.
- *      tags: [SpeedTest]
+ *      tags: [Test]
  *      parameters:
  *       - name: id
  *         in: path
