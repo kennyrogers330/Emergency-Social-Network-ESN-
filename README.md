@@ -50,12 +50,12 @@ http://<IP>:8000/api/v1/api-documentation or http://localhost:8000/api/v1/api-do
 
 This is the [ArchitectureHaiku](https://drive.google.com/file/d/1Kf4iAK2ZxRx-xaOla8Gzc3Zp4eab_RSz/view?usp=sharing) of the application.
 
-These are the [OOA](https://drive.google.com/drive/u/4/folders/1qZAIoiFOXOn6Xd-clovOkOo-aDIpnfJG) for use cases `Join a community` and `Chat Publicly`.
+These are the [OOA](https://drive.google.com/drive/u/4/folders/1qZAIoiFOXOn6Xd-clovOkOo-aDIpnfJG) for use cases.
 
 <!-- These are the [SequenceDiagrams](https://docs.google.com/document/d/1VFcpOEG1Exxgjf78wP2nl9l7Kc4ffG-Qa23HQuFMWpY/edit) for use cases `Join a community` and `Chat Publicly`.
 
 These are the [ClassDiagrams](https://docs.google.com/document/d/1VFcpOEG1Exxgjf78wP2nl9l7Kc4ffG-Qa23HQuFMWpY/edit) for use cases `Join a community` and `Chat Publicly`. -->
 
-This is a [MappingTable](https://docs.google.com/document/d/1jW3Y2eGU3pfw1l2bJHaQQbDvnIDXfb0PcHG6AtToKjE/edit?usp=drivesdk) between analysis classes and implementation elements for use cases `Join a community` and `Chat Publicly`.
+<!-- This is a [MappingTable](https://docs.google.com/document/d/1jW3Y2eGU3pfw1l2bJHaQQbDvnIDXfb0PcHG6AtToKjE/edit?usp=drivesdk) between analysis classes and implementation elements for use cases `Join a community` and `Chat Publicly`. -->
 
 This [Design Files](https://www.figma.com/files/project/202268947/FSE-RW1?fuid=984761051782459304). This will have both `Components` and `Entire Design Of the Project`
