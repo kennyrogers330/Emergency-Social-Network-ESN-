@@ -10,7 +10,7 @@ import io from "socket.io-client";
 import api from "../../utils/api.js";
 import PropTypes from "prop-types";
 import moment from "moment";
-const apiUrl = import.meta.API_URL;
+const apiUrl = import.meta.env.API_URL;
 
 const Chat = ({ userData, toggleChat, visibilityChat}) => {
   const socket = io.connect(apiUrl, {
