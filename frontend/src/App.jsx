@@ -4,16 +4,6 @@ import AppRoutes from "./routes/Routes.jsx";
 import { UserProvider } from "./context/UserContext.jsx";
 
 function App() {
-  // useEffect(() => {
-  //   const socket = io.connect('http://localhost:8000');
-  //   socket.on('Data', (data) => {
-  //     console.log('Message from server:', data);
-  //   });
-
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
 
   return (
     <>

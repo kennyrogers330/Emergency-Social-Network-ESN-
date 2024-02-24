@@ -1,3 +1,4 @@
 import { io } from 'socket.io-client'
+const apiUrl = import.meta.API_URL;
 
-export const socket = io.connect('http://localhost:8000/api/v1/', { autoConnect: false })
+export const socket = io.connect(apiUrl, { autoConnect: false })
