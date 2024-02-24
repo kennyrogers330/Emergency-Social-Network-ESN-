@@ -53,8 +53,8 @@ export const register = async (username, password) => {
 
 export const logout = async () => {
   try {
-    localStorage.removeItem("user");
     await api.get("logout");
+    localStorage.removeItem("user");
     console.log("User logged out");
   } catch (err) {
     console.error("Error during logout:", err);
