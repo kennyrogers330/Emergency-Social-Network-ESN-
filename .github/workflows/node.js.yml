@@ -36,9 +36,11 @@ jobs:
               DEPLOY_URL="https://staging.example.com"
               ;;
             *)
-              DEPLOY_URL="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
+              DEPLOY_URL_FRONTEND="https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
+              DEPLOY_URL_BACKEND="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
               ;;
           esac
 
-          curl "$DEPLOY_URL"
+          curl "$DEPLOY_URL_BACKEND"
+          curl "$DEPLOY_URL_FRONTEND"
           # Add deployment commands here
