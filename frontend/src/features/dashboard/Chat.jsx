@@ -10,30 +10,29 @@ import io from "socket.io-client";
 import api from "../../utils/api.js";
 import PropTypes from "prop-types";
 import moment from "moment";
-import messages from "../authentication/LoginForm.jsx"
 const apiUrl = import.meta.env.API_URL;
 
 const Chat = ({ userData, toggleChat, visibilityChat}) => {
   const socket = io.connect("https://fse-rw-s24-rw1-backend.onrender.com", {
     autoConnect: false,
   });
-  // const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
 
   // load older message.
   useEffect(() => {
-    // const getMessages = async () => {
-    //   try {
-    //     const response = await api.get("/messages", {});
-    //     setMessages(response.data.messages.chats);
-    //     return response.data;
-    //   } catch (err) {
-    //     console.error("Error fetching messages:", err);
-    //     throw err;
-    //   }
-    // };
+    const getMessages = async () => {
+      try {
+        const response = await api.get("/messages", {});
+        setMessages(response.data.messages.chats);
+        return response.data;
+      } catch (err) {
+        console.error("Error fetching messages:", err);
+        throw err;
+      }
+    };
 
-    // getMessages();
+    getMessages();
 
     socket.on("receive_message", (data) => {
       sendMessage(data);
