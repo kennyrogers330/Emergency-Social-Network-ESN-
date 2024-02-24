@@ -8,13 +8,25 @@ import { toast } from "react-hot-toast";
 import { existingUsers } from "../../services/AuthServices.js";
 import Popup from "../../components/Popup.jsx";
 
+export let messages
 const LoginForm = () => {
   const [input, setInput] = useState({ username: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
-
+  
   const navigate = useNavigate();
+  
+  const getMessages = async () => {
+    try {
+      const response = await api.get("/messages", {});
+      messages = response.data.messages.chats;
+      return response.data;
+    } catch (err) {
+      console.error("Error fetching messages:", err);
+      throw err;
+    }
+  };  
 
   const handleChange = (event) => {
     setInput({
@@ -29,6 +41,7 @@ const LoginForm = () => {
       if (userData) {
         setCurrentUser(userData);
         toast.success("Logged in successfully");
+        getMessages()
         navigate("/dashboard", { replace: true });
         console.log("User logged in:", userData);
       } else {
