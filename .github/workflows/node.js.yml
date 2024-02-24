@@ -43,7 +43,9 @@ jobs:
 
           # Define a function to check URL availability
           check_url_availability() {
-            curl -s -o /dev/null -w "%{http_code}" "$1"
+            response=$(curl -s -o /dev/null -w "%{http_code}" "$1")
+            echo "Response code for $1: $response"
+            echo "$response"
           }
 
           # Loop until the first URL becomes available
