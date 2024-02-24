@@ -47,10 +47,10 @@ jobs:
           }
 
           # Loop until the first URL becomes available
-          until [[ $(check_url_availability "$DEPLOY_URL_BACKEND") -eq 200 ]]; do
-            echo "Waiting for the first URL BACKEND to become available..."
+          until [[ $(check_url_availability "https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/") -eq 200 ]]; do
+            echo "Waiting for the BACKEND to become available..."
             sleep 10
           done
 
-          # Once the first URL is available, curl the second URL
+          # Once the BACKEND is available, deploy the FRONTEND
           curl "$DEPLOY_URL_FRONTEND"
