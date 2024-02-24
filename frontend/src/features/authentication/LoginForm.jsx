@@ -42,7 +42,7 @@ const LoginForm = () => {
       if (userData) {
         setCurrentUser(userData);
         toast.success("Logged in successfully");
-        await getMessages()
+        await sgetMessages()
         navigate("/dashboard", { replace: true });
         console.log("User logged in:", userData);
       } else {
