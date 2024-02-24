@@ -43,14 +43,13 @@ jobs:
 
           # Define a function to check URL availability
           check_url_availability() {
-            response=$(curl -s -o /dev/null -w "%{http_code}" "$1")
-            echo "Response code for $1: $response"
-            echo "$response"
+            curl -s -o /dev/null -w "%{http_code}" "$1"
           }
 
           # Loop until the first URL becomes available
           until [[ $(check_url_availability "https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/") -eq 200 ]]; do
             echo "Waiting for the BACKEND to become available..."
+            curl -s -o /dev/null -w "%{http_code}" https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/
             sleep 10
           done
 
