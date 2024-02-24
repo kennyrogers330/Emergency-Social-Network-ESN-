@@ -40,5 +40,5 @@ jobs:
               ;;
           esac
 
-          curl "Deploying to $DEPLOY_URL"
+          curl "$DEPLOY_URL"
           # Add deployment commands here
