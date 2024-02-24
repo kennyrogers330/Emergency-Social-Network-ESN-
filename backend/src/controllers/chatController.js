@@ -72,13 +72,11 @@ export class ChatController {
         .status(200)
         .json({ status: "success", count: chats.length, chats });
     } catch (err) {
-      return res
-        .status(500)
-        .json({
-          status: "error",
-          error: err.message,
-          message: "Failed to fetch chats",
-        });
+      return res.status(500).json({
+        status: "error",
+        error: err.message,
+        message: "Failed to fetch chats",
+      });
     }
   }
 

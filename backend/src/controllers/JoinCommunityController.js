@@ -111,7 +111,7 @@ class AuthController {
 
   static async logout(req, res) {
     try {
-      if (!req.session || !req.session.user) {
+      if (!req.session) {
         return res.status(401).json({
           status: "failure",
           error: "You are not logged in!",
@@ -170,7 +170,7 @@ class AuthController {
     }
 
     if (!token) {
-      return res.status(401).json({
+      return res.status(403).json({
         status: "auth-failure",
         error: "You are not logged in! Please log in to get access.",
       });
@@ -181,7 +181,7 @@ class AuthController {
     const auth_citizen = await Citizen.findById(decoded.id);
 
     if (!auth_citizen) {
-      return res.status(401).json({
+      return res.status(403).json({
         status: "auth-failure",
         error: "The User belonging to this token does no longer exist",
       });
