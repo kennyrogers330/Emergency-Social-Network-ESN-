@@ -36,11 +36,21 @@ jobs:
               DEPLOY_URL="https://staging.example.com"
               ;;
             *)
-              DEPLOY_URL_FRONTEND="https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
               DEPLOY_URL_BACKEND="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
+              DEPLOY_URL_FRONTEND="https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
               ;;
           esac
 
-          curl "$DEPLOY_URL_BACKEND"
+          # Define a function to check URL availability
+          check_url_availability() {
+            curl -s -o /dev/null -w "%{http_code}" "$1"
+          }
+
+          # Loop until the first URL becomes available
+          until [[ $(check_url_availability "$DEPLOY_URL_BACKEND") -eq 200 ]]; do
+            echo "Waiting for the first URL BACKEND to become available..."
+            sleep 10
+          done
+
+          # Once the first URL is available, curl the second URL
           curl "$DEPLOY_URL_FRONTEND"
-          # Add deployment commands here
