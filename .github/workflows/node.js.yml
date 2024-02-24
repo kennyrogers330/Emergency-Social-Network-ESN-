@@ -26,7 +26,7 @@ jobs:
       # - name: Run tests
       #   run: npm test
 
-      - name: Deploy on Cloud
+      - name: Deploy to environment
         run: |
           case "${{ github.ref }}" in
             refs/heads/main)
@@ -35,11 +35,10 @@ jobs:
             refs/heads/staging)
               DEPLOY_URL="https://staging.example.com"
               ;;
-            refs/heads/cicd-setup))
-              curl "https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY" && curl "https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
+            *)
+              DEPLOY_URL="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
               ;;
           esac
-          echo "Deployed..."
-          # curl "Deploying to $DEPLOY_URL_BACKEND"
-          # curl "Deploying to $DEPLOY_URL_FRONTEND"
+
+          echo "Deploying to $DEPLOY_URL"
           # Add deployment commands here
