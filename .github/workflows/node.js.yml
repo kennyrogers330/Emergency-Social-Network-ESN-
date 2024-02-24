@@ -47,9 +47,8 @@ jobs:
           }
 
           # Loop until the first URL becomes available
-          until [[ $(check_url_availability "https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/") -eq 200 ]]; do
+          until [[ $($(curl -s -o /dev/null -w "%{http_code}" https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/) -eq 200 ]]; do
             echo "Waiting for the BACKEND to become available..."
-            curl -s -o /dev/null -w "%{http_code}" https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/
             sleep 10
           done
 
