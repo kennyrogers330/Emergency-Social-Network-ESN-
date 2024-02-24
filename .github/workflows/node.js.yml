@@ -38,7 +38,6 @@ jobs:
             refs/heads/cicd-setup))
               curl "https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
               curl "https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
-              ;;
           esac
 
           # curl "Deploying to $DEPLOY_URL_BACKEND"
