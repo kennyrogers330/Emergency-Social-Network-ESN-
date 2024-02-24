@@ -13,7 +13,7 @@ import moment from "moment";
 const apiUrl = import.meta.env.API_URL;
 
 const Chat = ({ userData, toggleChat, visibilityChat}) => {
-  const socket = io.connect(apiUrl, {
+  const socket = io.connect("https://fse-rw-s24-rw1-backend.onrender.com", {
     autoConnect: false,
   });
   const [messages, setMessages] = useState([]);
