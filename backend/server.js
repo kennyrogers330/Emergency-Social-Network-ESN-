@@ -12,7 +12,7 @@ const httpServer = http.createServer(app);
 SocketUtil.config(httpServer);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
     credentials: true,
   },
