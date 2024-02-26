@@ -4,6 +4,8 @@ import app from "../../app.js";
 import Citizen from "../models/Citizen.js";
 import bcrypt from "bcryptjs";
 import { getJwtToken } from "./../utils/jwt.utils.js";
+import fs from "fs";
+import { bannedUsernames } from "./../models/data/bannedUsernames.js";
 
 // console.log(process.env.JWT_SECRET);
 describe("users", () => {
@@ -66,6 +68,18 @@ describe("users", () => {
       expect(savedUser).toBeDefined();
     });
 
+    it("Should throw an error if the password is less than 4 characters", async () => {
+      // Attempt to sign up with password less than 4 characters
+      const response = await supertest(app)
+        .post("/api/v1/citizens")
+        .send({ username: "existinguser", password: "wr" })
+        .expect(400);
+      expect(response.body.status).toBe("auth-failure");
+      expect(response.body.error).toBe(
+        "Citizen validation failed: password: At least Four characheter for the password",
+      );
+    });
+
     it("should log in an existing user if the password is correct", async () => {
       // Create an existing user
       const existingUser = {
@@ -93,29 +107,69 @@ describe("users", () => {
       expect(updatedUser.status).toBe("online");
     });
 
-    it("shouldn't log in an existing user if the password isn't correct", async () => {
-      // Create an existing user
-      const existingUser = {
-        username: "existinguser",
-        password: "existingpassword",
-      };
-      await Citizen.create(existingUser);
+    describe("username validation test", () => {
+      it("Throw an error if the username is less than three characters", async () => {
+        const username = "t";
+        const password = "testpassword";
 
-      // Attempt to log in with blank password
-      let response = await supertest(app)
-        .post("/api/v1/citizens")
-        .send({ username: "existinguser" })
-        .expect(400);
-      expect(response.body.status).toBe("auth-failure");
-      expect(response.body.error).toBe("wrong password");
+        const response = await supertest(app)
+          .post("/api/v1/citizens")
+          .send({ username, password })
+          .expect(400);
+        expect(response.body.error).toBe(
+          "Citizen validation failed: username: At least three characheter",
+        );
+      });
 
-      // Attempt to log in with wrong password
-      response = await supertest(app)
-        .post("/api/v1/citizens")
-        .send({ username: "existinguser", password: "wrongpassword" })
-        .expect(400);
-      expect(response.body.status).toBe("auth-failure");
-      expect(response.body.error).toBe("wrong password");
+      it("Throw an error if a banned username is used", async () => {
+        const randomIndex = Math.floor(Math.random() * bannedUsernames.length);
+        const bannedUsername = bannedUsernames[randomIndex];
+
+        const password = "testpassword";
+        console.log(bannedUsername);
+        const response = await supertest(app)
+          .post("/api/v1/citizens")
+          .send({ username: bannedUsername, password })
+          .expect(400);
+
+        expect(response.body.error).toBe(
+          "Citizen validation failed: username: This Username is banned and not allowed",
+        );
+      });
+    });
+
+    describe("Pasword validation tests", () => {
+      let existingUser;
+      beforeEach(async () => {
+        // Create a mock user
+        existingUser = {
+          username: "existinguser",
+          password: "existingpassword",
+        };
+        await Citizen.create(existingUser);
+      });
+
+      afterEach(async () => await dropCollections());
+
+      it("shouldn't log in an existing user if the password is blank", async () => {
+        // Attempt to log in with blank password
+        const response = await supertest(app)
+          .post("/api/v1/citizens")
+          .send({ username: "existinguser" })
+          .expect(400);
+        expect(response.body.status).toBe("auth-failure");
+        expect(response.body.error).toBe("wrong password");
+      });
+
+      it("Should throw an error if the password is wrong", async () => {
+        // Attempt to log in with wrong password
+        const response = await supertest(app)
+          .post("/api/v1/citizens")
+          .send({ username: "existinguser", password: "wrongpassword" })
+          .expect(400);
+        expect(response.body.status).toBe("auth-failure");
+        expect(response.body.error).toBe("wrong password");
+      });
     });
   });
 

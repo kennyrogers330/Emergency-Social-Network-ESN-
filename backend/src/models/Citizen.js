@@ -16,7 +16,7 @@ class User {
             const bannedUsernames = await loadBannedUsernames(import.meta.url); // Load banned usernames dynamically
             return !bannedUsernames.includes(username.toLowerCase());
           },
-          message: "Username is not allowed",
+          message: "This Username is banned and not allowed",
         },
       },
       password: {
