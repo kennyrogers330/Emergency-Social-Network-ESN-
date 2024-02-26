@@ -3,8 +3,29 @@ import { Link } from 'react-router-dom';
 import { GoHome } from 'react-icons/go';
 import { IoIosLogOut } from 'react-icons/io';
 import { HiOutlineUser } from 'react-icons/hi2';
+import { RiShareForwardLine } from 'react-icons/ri';
+import React, { useState } from 'react';
+import okayImage from '../assets/icon/okay.png';
+import helpImage from '../assets/icon/help.png';
+import emergencyImage from '../assets/icon/emergency.png';
+
+
+
+const statusRules = [
+  { label: 'OK', color: 'green', icon: okayImage},
+  { label: 'Help', color: 'yellow',icon: helpImage}, 
+  { label: 'Emergency', color: 'red' , icon: emergencyImage},
+];
 
 const Sidebar = () => {
+
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('');
+
+  const handleStatusClick = (status) => {
+    setSelectedStatus(status);
+    setDropdownVisible(false);
+  };
   const menuItems = [
     {
       path: '/dashboard',
@@ -61,6 +82,34 @@ const Sidebar = () => {
       name: 'home',
       icon: <HiOutlineUser size={24} />,
     },
+
+    {
+      path: '/dashboard', 
+      name: 'home',
+      icon:  (
+        <div className="relative">
+          <RiShareForwardLine size={24} onClick={() => setDropdownVisible(!dropdownVisible)} />
+          {dropdownVisible && (
+            <div className="absolute top-0 left-10 mt-2 bg-white border border-gray-200 rounded shadow-lg">
+              {statusRules.map((rule, index) => (
+                <div
+                  key={index}
+                  className={`p-2 cursor-pointer hover:bg-gray-100 text`}
+                  style={{ color: rule.color }} 
+                  onClick={() => handleStatusClick(rule.label)}
+                >
+                  <img src={rule.icon} alt={rule.label} className="w-6 h-6 mr-2" />
+                  {rule.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ),
+    },
+    
+
+
   ];
   return (
     <div className="flex justify-between flex-col">
