@@ -3,6 +3,11 @@ import group from '../../assets/images/group.jpg';
 
 const Contact = ({name, isPublic}) => {
 
+  // Function to limit the displayed characters of the name
+  const truncateName = (str, maxLen) => {
+    return str.length > maxLen ? str.slice(0, maxLen) + '...' : str;
+  };
+
   return (
     <div className="px-5 py-1">
       <div className="flex py-2 px-2 gap-4 rounded-lg bg-[#E7ECF0]">
@@ -10,8 +15,8 @@ const Contact = ({name, isPublic}) => {
           <img src={group} alt="profile" className="w-10 h-10 rounded-lg" />
         </div>
         <div className="flex flex-1 justify-between">
-          <div>
-            <p> { name} </p>
+          <div className="flex flex-col justify-center">
+            <p> {truncateName(name, 10)} </p>
             {
               isPublic ? <p className="text-[12px] text-opacity-40">12 members</p>: ''
             }

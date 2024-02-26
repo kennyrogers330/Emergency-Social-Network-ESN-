@@ -6,13 +6,13 @@ function Member({ member, status }) {
   return (
     <>
       {member ? (
-        <div className={`flex flex-row mt-2`}>
+        <div className={`flex flex-row mt-2 items-center`}>
           <img
-            className="object-cover h-10 rounded-lg m-2"
+            className="object-cover h-10 rounded-lg m-2 flex-shrink-0"
             src={leoImage}
             alt="profile"
           />
-          <div className="w-full flex justify-between">
+         
             <div className="flex flex-col ml-4">
               <div className="font-bold">{member}</div>
               <div
@@ -21,7 +21,6 @@ function Member({ member, status }) {
                 }`}
               >
                 {status}
-              </div>
             </div>
           </div>
         </div>
