@@ -18,7 +18,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://s24fseesnrw1.onrender.com",
+    origin: "*",
+    methods: ["GET", "POST"],
     credentials: true,
   }),
 );
