@@ -18,9 +18,8 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
-    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
-    // credentials: true,
+    origin: "https://s24fseesnrw1.onrender.com",
+    credentials: true,
   }),
 );
 
