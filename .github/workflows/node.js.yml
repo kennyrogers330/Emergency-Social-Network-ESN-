@@ -24,7 +24,7 @@ jobs:
         # run: cd ../backend/ && npm install
 
       - name: Run Tests
-        run: npm test -- --detectOpenHandles
+        run: cd backend/ && npm test -- --detectOpenHandles
 
       - name: Deploy Backend on cloud
         run: |
