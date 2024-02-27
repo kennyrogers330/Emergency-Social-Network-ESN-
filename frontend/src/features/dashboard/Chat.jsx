@@ -22,7 +22,7 @@ const Chat = ({ userData, toggleChat, visibilityChat}) => {
   // load older message.
   useEffect(() => {
     const getMessages = async () => {
-      let storedUser = JSON.parse(localStorage.getItem("user"));
+      const storedUser = JSON.parse(localStorage.getItem("user"));
       const token = storedUser.token
       const config = {
         headers: {
