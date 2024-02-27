@@ -57,6 +57,7 @@ class AuthController {
           username,
           password,
           status: "online",
+          healthStatus: "OK",
         });
         newCitizen.password = undefined;
         req.session.user = newCitizen;
