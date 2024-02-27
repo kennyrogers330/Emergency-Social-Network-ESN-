@@ -41,5 +41,4 @@ app.use("/api/v1/api-documentation", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/v1", userRoutes);
 app.use("/api/v1/messages", chatRoutes);
 app.use("/api/v1/message", privateRoute);
-
 export default app;

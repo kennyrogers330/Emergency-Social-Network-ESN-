@@ -4,7 +4,6 @@ import connectDb from "./src/config/dbConnection.js";
 import { Server } from "socket.io";
 import http from "http";
 import { SocketUtil } from "./src/utils/socketUtils.js";
-
 dotenv.config({ path: "./config.env" });
 
 const port = process.env.PORT || 3000;
