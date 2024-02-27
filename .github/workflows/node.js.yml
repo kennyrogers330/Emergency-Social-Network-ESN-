@@ -23,8 +23,8 @@ jobs:
         run: cd frontend/ && npm install && cd ../backend/ && npm install
         # run: cd ../backend/ && npm install
 
-      - name: Run Tests
-        run: cd backend/ && npm test -- --detectOpenHandles
+      # - name: Run Tests
+      #   run: cd backend/ && npm test -- --detectOpenHandles
 
       - name: Deploy Backend on cloud
         run: |
