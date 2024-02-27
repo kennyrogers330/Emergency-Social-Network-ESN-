@@ -12,7 +12,7 @@ const httpServer = http.createServer(app);
 SocketUtil.config(httpServer);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://s24fseesnrw1.onrender.com",
     methods: ["GET", "POST"],
     credentials: true,
   },

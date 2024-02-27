@@ -1,29 +1,70 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
   push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "dev" ]
+    branches:
+      - "*"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    # strategy:
-    #   matrix:
-    #     node-version: [14.x, 16.x, 18.x]
-    #     # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    container: node:20.10.0
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-    - run: echo "Working fine ..."
-    # - run: npm ci
-    # - run: npm run build --if-present
-    # - run: npm test
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        # with:
+        #   node-version: "14"
+
+      - name: Install dependencies
+        run: cd frontend/ && npm install
+        # run: cd ../backend/ && npm install
+
+      # - name: Run tests
+      #   run: npm test
+
+      - name: Deploy Backend on cloud
+        run: |
+          case "${{ github.ref }}" in
+            refs/heads/main)
+              DEPLOY_URL="https://prod.example.com"
+              ;;
+            refs/heads/staging)
+              DEPLOY_URL="https://staging.example.com"
+              ;;
+            *)
+              DEPLOY_URL_BACKEND="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
+              DEPLOY_URL_FRONTEND="https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
+              ;;
+          esac
+
+          curl "$DEPLOY_URL_BACKEND"
+
+          sleep 20
+
+      - name: Deploy Frontend on cloud
+        run: |
+          case "${{ github.ref }}" in
+            refs/heads/main)
+              DEPLOY_URL="https://prod.example.com"
+              ;;
+            refs/heads/staging)
+              DEPLOY_URL="https://staging.example.com"
+              ;;
+            *)
+              DEPLOY_URL_BACKEND="https://api.render.com/deploy/srv-cncrme6g1b2c739ji2tg?key=iSipfFr9sFY"
+              DEPLOY_URL_FRONTEND="https://api.render.com/deploy/srv-cncs0mun7f5s73biedvg?key=_GLTDTTT_ss"
+              ;;
+          esac
+
+          # Loop until the first URL becomes available
+          until [ $(curl -s -o /dev/null -w "%{http_code}" https://fse-rw-s24-rw1-backend.onrender.com/api/v1/api-documentation/) -eq 200 ]; do
+            echo "Waiting for the BACKEND to become available..."
+            sleep 10
+          done
+
+          # Once the BACKEND is available, deploy the FRONTEND
+          curl "$DEPLOY_URL_FRONTEND"

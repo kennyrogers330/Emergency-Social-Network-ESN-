@@ -10,9 +10,10 @@ import io from "socket.io-client";
 import api from "../../utils/api.js";
 import PropTypes from "prop-types";
 import moment from "moment";
+const apiUrl = import.meta.env.API_URL;
 
 const Chat = ({ userData, toggleChat, visibilityChat}) => {
-  const socket = io.connect("http://localhost:8000/api/v1/", {
+  const socket = io.connect("https://fse-rw-s24-rw1-backend.onrender.com", {
     autoConnect: false,
   });
   const [messages, setMessages] = useState([]);
@@ -21,8 +22,15 @@ const Chat = ({ userData, toggleChat, visibilityChat}) => {
   // load older message.
   useEffect(() => {
     const getMessages = async () => {
+      let storedUser = JSON.parse(localStorage.getItem("user"));
+      const token = storedUser.token
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
       try {
-        const response = await api.get("/messages", {});
+        const response = await api.get("/messages", config);
         setMessages(response.data.messages.chats);
         return response.data;
       } catch (err) {
