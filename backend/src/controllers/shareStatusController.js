@@ -3,7 +3,7 @@ import { SocketUtil } from "../utils/socketUtils.js";
 
 const shareStatusController = async(req,res) => {
     const newStatus = {
-        senderId: req.user.id,
+        senderId: req.params.id,
         status: req.body.healthStatus,
       };
     SocketUtil.socketEmit("shareStatus", newStatus);

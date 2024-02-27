@@ -4,10 +4,15 @@ import { GoHome } from 'react-icons/go';
 import { IoIosLogOut } from 'react-icons/io';
 import { HiOutlineUser } from 'react-icons/hi2';
 import { RiShareForwardLine } from 'react-icons/ri';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import okayImage from '../assets/icon/okay.png';
 import helpImage from '../assets/icon/help.png';
 import emergencyImage from '../assets/icon/emergency.png';
+import api from '../utils/api';
+import { socket } from '../utils/sockets';
+import { UserContext } from '../context/UserContext.jsx'
+import { useContext } from 'react';
+
 
 
 
@@ -18,14 +23,33 @@ const statusRules = [
 ];
 
 const Sidebar = () => {
-
+  const { currentUser } = useContext(UserContext)
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState('');
+  // const [selectedStatus, setSelectedStatus] = useState('');
+
+  const userData = currentUser.user
+  const id = userData._id
+
+  const updateStatus = async (status) => {
+    try {
+      const response= await api.put(`/citizens/${id}/status`, {
+        healthStatus: status,
+      })
+      console.log('wearehere',response);
+    } catch (error) {
+      console.error('Error updating status:', error)
+    }
+  }
 
   const handleStatusClick = (status) => {
-    setSelectedStatus(status);
+    // setSelectedStatus(status);
+    updateStatus(status);
     setDropdownVisible(false);
   };
+
+  socket.on('shareStatus', (data) => {
+    updateStatus(data)
+  })
   const menuItems = [
     {
       path: '/dashboard',

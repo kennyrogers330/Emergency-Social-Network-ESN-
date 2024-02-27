@@ -65,7 +65,7 @@ function MembersDirectory({ toggleMember, visibility }) {
             <div className="mr-2">{existingUsers.citizens.length}</div>
           </div>
           {sortedUsers.map((user) => {
-            return <Member member={user.username} status={user.status} />;
+            return <Member member={user.username} status={user.status} healthStatus={user.healthStatus} />;
           })}
         </div>
       </div>
