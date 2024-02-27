@@ -20,11 +20,11 @@ jobs:
         #   node-version: "14"
 
       - name: Install dependencies
-        run: cd frontend/ && npm install
+        run: cd frontend/ && npm install && cd ../backend/ && npm install
         # run: cd ../backend/ && npm install
 
-      # - name: Run tests
-      #   run: npm test
+      - name: Run Tests
+        run: npm test -- --detectOpenHandles
 
       - name: Deploy Backend on cloud
         run: |
@@ -42,8 +42,8 @@ jobs:
           esac
 
           curl "$DEPLOY_URL_BACKEND"
-
           sleep 20
+          echo "Go to "
 
       - name: Deploy Frontend on cloud
         run: |
