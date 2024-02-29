@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://s24fseesnrw1.onrender.com",
+    origin: "http://localhost:3000",
     credentials: true,
   }),
 );
