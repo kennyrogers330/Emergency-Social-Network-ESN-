@@ -9,7 +9,8 @@ import chatRoutes from "./src/routes/chatRoutes.js";
 import privateRoute from "./src/routes/privateRouteChat.js";
 import { swaggerOptions } from "./swagger.js";
 import cookieParser from "cookie-parser";
-
+import SpeedTestMiddleware from "./src/utils/SpeedTestMiddleware.js";
+import speedTestRoutes from "./src/routes/speedTestRoutes.js";
 dotenv.config({ path: "./config.env" });
 
 const { SESSION_SECRET } = process.env;
@@ -33,6 +34,8 @@ app.use(
   }),
 );
 
+app.use(SpeedTestMiddleware.checkSpeedTestInProgress);
+
 // Swagger setup
 const specs = swaggerJsdoc(swaggerOptions);
 app.use("/api/v1/api-documentation", swaggerUi.serve, swaggerUi.setup(specs));
@@ -41,4 +44,6 @@ app.use("/api/v1/api-documentation", swaggerUi.serve, swaggerUi.setup(specs));
 app.use("/api/v1", userRoutes);
 app.use("/api/v1/messages", chatRoutes);
 app.use("/api/v1/message", privateRoute);
+app.use("/speed-test", speedTestRoutes);
+
 export default app;

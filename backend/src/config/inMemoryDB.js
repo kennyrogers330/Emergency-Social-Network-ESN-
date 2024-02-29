@@ -13,8 +13,10 @@ export const connect = async () => {
 export const disconnect = async () => {
   await mongoose.disconnect();
   mongoose.connection.close();
-  await mongoServer.stop();
-  console.log(`InMemory MongoDB Successfully disconnected`);
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
+  console.log(`Current MongoDB Successfully disconnected`);
   return;
 };
 

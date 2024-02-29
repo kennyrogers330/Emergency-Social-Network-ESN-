@@ -17,6 +17,7 @@ export class ChatController {
         .status(200)
         .json({ message: "Message sent.", newMessage: savedMessage });
     } catch (err) {
+      console.log(err.message);
       return res.status(500).json({
         error: err.message,
         message: "Failed to send a new message",

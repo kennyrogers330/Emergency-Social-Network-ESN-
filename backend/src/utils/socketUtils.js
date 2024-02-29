@@ -1,22 +1,22 @@
-import { Server } from 'socket.io';
+import { Server } from "socket.io";
 
 export class SocketUtil {
-    static socketEmit(key, data) {
+  static socketEmit(key, data) {
     if (SocketUtil.io) {
       SocketUtil.io.sockets.emit(key, data);
     }
   }
   static config(server) {
-    SocketUtil.io = new Server(server, { cors: { origin: '*'} });
+    SocketUtil.io = new Server(server, { cors: { origin: "*" } });
 
-    SocketUtil.io.on('connection', (socket) => {
-      console.log('User connected', socket.id);
-      socket.on('join_room', (data) => {
+    SocketUtil.io.on("connection", (socket) => {
+      console.log("User connected", socket.id);
+      socket.on("join_room", (data) => {
         socket.join(data);
       });
-    
-      socket.on('disconnect', () => {
-        console.log('User disconnected', socket.id);
+
+      socket.on("disconnect", () => {
+        console.log("User disconnected", socket.id);
       });
     });
   }
