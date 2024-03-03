@@ -22,8 +22,14 @@ export const ExistingUsersProvider = ({ children }) => {
   }, []);
 
   const updateUserHealthStatus = async (username, newHealthStatus) => {
-    const updatedUsers =  existingUsers?.map((user) =>
-      user.username === username ? { ...user, healthStatus: newHealthStatus } : user
+    const updatedUsers = existingUsers?.map((user) =>
+      user.username === username
+        ? {
+            ...user,
+            healthStatus: newHealthStatus,
+            healthStatusTimestamp: Date.now(),
+          }
+        : user
     )
 
     setExistingUsers(updatedUsers)

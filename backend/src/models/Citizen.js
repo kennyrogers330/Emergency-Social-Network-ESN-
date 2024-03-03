@@ -33,6 +33,10 @@ class User {
         type: String,
         enum: ["OK", "Help", "Emergency"],
       },
+      healthStatusTimestamp: {
+        type: Date,
+        default: Date.now
+      },
 
     });
 

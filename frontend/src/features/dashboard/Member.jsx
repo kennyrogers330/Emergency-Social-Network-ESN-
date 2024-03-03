@@ -6,11 +6,11 @@ import okayImage from '../../assets/icon/okay.png'
 import helpImage from '../../assets/icon/help.png'
 import emergencyImage from '../../assets/icon/emergency.png'
 
-function Member({ member, status, healthStatus }) {
+function Member({ user }) {
   return (
     <>
-      {member ? (
-        <div className={`flex flex-row mt-2 items-center`}>
+      {user.username ? (
+        <div className={`flex flex-row mt-2`}>
           <img
             className="object-cover h-10 rounded-lg m-2 flex-shrink-0"
             src={leoImage}
@@ -18,21 +18,23 @@ function Member({ member, status, healthStatus }) {
           />
           <div className="w-full flex justify-between">
             <div className="flex flex-col ml-4">
-              <div className="font-bold">{member}</div>
+              <div className="font-bold">{user.username}</div>
               <div className="flex gap-4">
                 <div
                   className={`font-normal ${
-                    status === 'offline' ? 'text-red-600' : 'text-green-600'
+                    user.status === 'offline'
+                      ? 'text-red-600'
+                      : 'text-green-600'
                   }`}
                 >
-                  {status}
+                  {user.status}
                 </div>
                 <div>
-                  {healthStatus === 'OK' ? (
+                  {user.healthStatus === 'OK' ? (
                     <img src={okayImage} alt="" className="w-6 h-6" />
-                  ) : healthStatus === 'Help' ? (
+                  ) : user.healthStatus === 'Help' ? (
                     <img src={helpImage} alt="" className="w-6 h-6" />
-                  ) : healthStatus === 'Emergency' ? (
+                  ) : user.healthStatus === 'Emergency' ? (
                     <img src={emergencyImage} alt="" className="w-6 h-6" />
                   ) : (
                     ''
