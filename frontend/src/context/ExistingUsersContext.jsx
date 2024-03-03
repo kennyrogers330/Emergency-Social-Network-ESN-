@@ -7,19 +7,20 @@ const ExistingUsersContext = createContext();
 
 export const ExistingUsersProvider = ({ children }) => {
   const [existingUsers, setExistingUsers] = useState([]);
+  const [existingUsername, setExistingUsername] = useState([])
 
-  useEffect(() => {
+    useEffect(() => {
+      fetchExistingUsers()
+    }, [])
     const fetchExistingUsers = async () => {
       try {
         const users = await getExistingUsers();
         setExistingUsers(users.citizens)
+        setExistingUsername(users.usernames)
       } catch (error) {
         console.error('Error fetching existing users:', error);
       }
     };
-
-    fetchExistingUsers();
-  }, []);
 
   const updateUserHealthStatus = async (username, newHealthStatus) => {
     const updatedUsers = existingUsers?.map((user) =>
@@ -36,10 +37,12 @@ export const ExistingUsersProvider = ({ children }) => {
   }
 
   return (
-    <ExistingUsersContext.Provider value={{ existingUsers,updateUserHealthStatus }}>
+    <ExistingUsersContext.Provider
+      value={{ existingUsers, existingUsername, updateUserHealthStatus,fetchExistingUsers }}
+    >
       {children}
     </ExistingUsersContext.Provider>
-  );
+  )
 };
 
 export default ExistingUsersContext;

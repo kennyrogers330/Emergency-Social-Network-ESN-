@@ -5,14 +5,17 @@ import { UserContext } from "../../context/UserContext.jsx";
 import Input from "../../components/Input.jsx";
 import Button from "../../components/Button.jsx";
 import { toast } from "react-hot-toast";
-import { existingUsers } from "../../services/AuthServices.js";
 import Popup from "../../components/Popup.jsx";
+import ExistingUsersContext from "../../context/ExistingUsersContext.jsx";
 
 const LoginForm = () => {
   const [input, setInput] = useState({ username: "", password: "" });
   const [submitted, setSubmitted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const { setCurrentUser } = useContext(UserContext);
+  const { existingUsername,fetchExistingUsers } =
+    useContext(ExistingUsersContext)
+
 
   const navigate = useNavigate();
 
@@ -29,8 +32,8 @@ const LoginForm = () => {
       if (userData) {
         setCurrentUser(userData);
         toast.success("Logged in successfully");
+        await fetchExistingUsers()
         navigate("/dashboard", { replace: true });
-        console.log("User logged in:", userData);
       } else {
         setInput({ username: "", password: "" });
         toast.error("Login failed");
@@ -62,11 +65,11 @@ const LoginForm = () => {
       return;
     }
 
-    if (existingUsers.usernames.includes(input.username)) {
-      setIsVisible(false);
-      handleLogin();
+    if (existingUsername?.includes(input.username)) {
+      setIsVisible(false)
+      handleLogin()
     } else {
-      setIsVisible(true);
+      setIsVisible(true)
     }
   };
 
