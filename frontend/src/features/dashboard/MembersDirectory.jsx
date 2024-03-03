@@ -1,16 +1,14 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-key */
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button.jsx";
-import Member from "./Member.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { logout } from "../../services/AuthServices.js";
-import { existingUsers } from "../../services/AuthServices.js";
 import { toast } from "react-hot-toast";
+import ExistingUsersContext from "../../context/ExistingUsersContext.jsx";
+import Member from "./Member.jsx";
 
-function MembersDirectory({ toggleMember, visibility }) {
+function MembersDirectory() {
+  const { existingUsers } = useContext(ExistingUsersContext)
   const { setCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -25,7 +23,7 @@ function MembersDirectory({ toggleMember, visibility }) {
     }
   };
 
-  const sortedUsers = existingUsers.citizens.sort((a, b) => {
+  const sortedUsers = existingUsers?.sort((a, b) => {
     if (a.status === 'online' && b.status !== 'online') {
       return -1;
     } else if (a.status !== 'online' && b.status === 'online') {
@@ -62,10 +60,10 @@ function MembersDirectory({ toggleMember, visibility }) {
         <div className="ml-3 mt-20 mb-4">
           <div className="flex justify-start font-semibold">
             <div className="mr-2">Citizens</div>
-            <div className="mr-2">{existingUsers.citizens.length}</div>
+            <div className="mr-2">{existingUsers?.length}</div>
           </div>
-          {sortedUsers.map((user) => {
-            return <Member member={user.username} status={user.status} />;
+          {sortedUsers?.map((user,index) => {
+            return <Member key={index} user={user}/>;
           })}
         </div>
       </div>

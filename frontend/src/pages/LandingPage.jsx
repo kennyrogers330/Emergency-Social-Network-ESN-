@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { getExistingUsers } from '../services/AuthServices';
 
 const LandingPage = () => {
   const navigate = useNavigate();  
@@ -67,5 +66,4 @@ const LandingPage = () => {
     </section>
   );
 };
-export const existingUsers = getExistingUsers()
 export default LandingPage;

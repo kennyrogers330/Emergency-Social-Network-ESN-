@@ -29,6 +29,15 @@ class User {
         type: String,
         enum: ["online", "offline"],
       },
+      healthStatus: {
+        type: String,
+        enum: ["OK", "Help", "Emergency"],
+      },
+      healthStatusTimestamp: {
+        type: Date,
+        default: Date.now
+      },
+
     });
 
     this.userSchema.pre("save", async function (next) {

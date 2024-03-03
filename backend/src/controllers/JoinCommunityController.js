@@ -57,6 +57,7 @@ class AuthController {
           username,
           password,
           status: "online",
+          healthStatus: "OK",
         });
         newCitizen.password = undefined;
         req.session.user = newCitizen;
@@ -75,7 +76,7 @@ class AuthController {
     try {
       const citizens = await Citizen.find(
         {},
-        { _id: 0, username: 1, status: 2 },
+        { _id: 0, username: 1, status: 2 ,healthStatus: 3},
       );
       const usernames = citizens.map((Citizen) => Citizen.username);
 
