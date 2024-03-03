@@ -16,25 +16,28 @@ function Member({ member, status, healthStatus }) {
             src={leoImage}
             alt="profile"
           />
-
-          <div className="flex flex-col ml-4">
-            <div className="font-bold">{member}</div>
-            <div className="flex gap-4">
-              <div
-                className={`font-normal ${
-                  status === 'offline' ? 'text-red-600' : 'text-green-600'
-                }`}
-              >
-                {status}
-              </div>
-              <div>
-                {healthStatus === 'OK' ? (
-                  <img src={okayImage} alt="" className="w-6 h-6" />
-                ) : healthStatus === 'Help' ? (
-                  <img src={helpImage} alt="" className="w-6 h-6" />
-                ) : (
-                  <img src={emergencyImage} alt="" className="w-6 h-6" />
-                )}
+          <div className="w-full flex justify-between">
+            <div className="flex flex-col ml-4">
+              <div className="font-bold">{member}</div>
+              <div className="flex gap-4">
+                <div
+                  className={`font-normal ${
+                    status === 'offline' ? 'text-red-600' : 'text-green-600'
+                  }`}
+                >
+                  {status}
+                </div>
+                <div>
+                  {healthStatus === 'OK' ? (
+                    <img src={okayImage} alt="" className="w-6 h-6" />
+                  ) : healthStatus === 'Help' ? (
+                    <img src={helpImage} alt="" className="w-6 h-6" />
+                  ) : healthStatus === 'Emergency' ? (
+                    <img src={emergencyImage} alt="" className="w-6 h-6" />
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
             </div>
           </div>

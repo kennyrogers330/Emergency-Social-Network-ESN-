@@ -4,13 +4,17 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button.jsx";
-import Member from "./Member.jsx";
 import { UserContext } from "../../context/UserContext.jsx";
 import { logout } from "../../services/AuthServices.js";
-import { existingUsers } from "../../services/AuthServices.js";
 import { toast } from "react-hot-toast";
+import leoImage from './../../assets/images/leo.jpg'
+import okayImage from '../../assets/icon/okay.png'
+import helpImage from '../../assets/icon/help.png'
+import emergencyImage from '../../assets/icon/emergency.png'
+import ExistingUsersContext from "../../context/ExistingUsersContext.jsx";
 
 function MembersDirectory({ toggleMember, visibility }) {
+  const { existingUsers } = useContext(ExistingUsersContext)
   const { setCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -25,7 +29,7 @@ function MembersDirectory({ toggleMember, visibility }) {
     }
   };
 
-  const sortedUsers = existingUsers.citizens.sort((a, b) => {
+  const sortedUsers = existingUsers?.sort((a, b) => {
     if (a.status === 'online' && b.status !== 'online') {
       return -1;
     } else if (a.status !== 'online' && b.status === 'online') {
@@ -62,10 +66,56 @@ function MembersDirectory({ toggleMember, visibility }) {
         <div className="ml-3 mt-20 mb-4">
           <div className="flex justify-start font-semibold">
             <div className="mr-2">Citizens</div>
-            <div className="mr-2">{existingUsers.citizens.length}</div>
+            <div className="mr-2">{existingUsers?.length}</div>
           </div>
-          {sortedUsers.map((user) => {
-            return <Member member={user.username} status={user.status} healthStatus={user.healthStatus} />;
+          {sortedUsers?.map((user) => {
+            // return <Member member={user.username} status={user.status} healthStatus={user.healthStatus} />;
+            return (
+              <>
+                {user.username ? (
+                  <div className={`flex flex-row mt-2`}>
+                    <img
+                      className="object-cover h-10 rounded-lg m-2"
+                      src={leoImage}
+                      alt="profile"
+                    />
+                    <div className="w-full flex justify-between">
+                      <div className="flex flex-col ml-4">
+                        <div className="font-bold">{user.username}</div>
+                        <div className="flex gap-4">
+                          <div
+                            className={`font-normal ${
+                              user.status === 'offline'
+                                ? 'text-red-600'
+                                : 'text-green-600'
+                            }`}
+                          >
+                            {user.status}
+                          </div>
+                          <div>
+                            {user.healthStatus === 'OK' ? (
+                              <img src={okayImage} alt="" className="w-6 h-6" />
+                            ) : user.healthStatus === 'Help' ? (
+                              <img src={helpImage} alt="" className="w-6 h-6" />
+                            ) : user.healthStatus === 'Emergency' ? (
+                              <img
+                                src={emergencyImage}
+                                alt=""
+                                className="w-6 h-6"
+                              />
+                            ) : (
+                              ''
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="">No users available</div>
+                )}
+              </>
+            )
           })}
         </div>
       </div>

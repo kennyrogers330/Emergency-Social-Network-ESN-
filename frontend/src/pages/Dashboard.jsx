@@ -6,9 +6,7 @@ import Member from '../features/dashboard/MembersDirectory.jsx';
 import Messages from '../features/dashboard/Messages.jsx';
 import { UserContext } from '../context/UserContext.jsx';
 import WelcomeWindow from '../features/dashboard/WelcomeWindow.jsx';
-import { existingUsers } from '../services/AuthServices.js';
 import MembersDirectory from '../features/dashboard/MembersDirectory.jsx';
-import ClosedChat from '../components/ClosedChat.jsx';
 
 function Dashboard() {
   const { currentUser } = useContext(UserContext);
