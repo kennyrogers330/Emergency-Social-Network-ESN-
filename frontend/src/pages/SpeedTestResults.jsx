@@ -17,7 +17,7 @@ const SpeedTestResults = () => {
 
   const fetchSpeedTestResults = async () => {
     try {
-        // Make API call to fetch speed test results
+        // API call to get speed test results
         const response = await axios.get('/speed-test/stop');
         setSpeedTestResults(response.data);
         setLoading(false);
@@ -45,7 +45,7 @@ const SpeedTestResults = () => {
       <div className="mt-8">
           {speedTestResults ? (
             <div className="p-4 border rounded bg-gray-100">
-              /* Display speed test results here */
+              {/*posting results*/}
               <h3 className="text-lg font-semibold mb-2">Your Speed Test Results:</h3>
               <p>POST requests per second: {speedTestResults.postRequestsPerSecond}</p>
               <p>GET requests per second: {speedTestResults.getRequestsPerSecond}</p>
