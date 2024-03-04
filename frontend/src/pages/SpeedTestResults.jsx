@@ -17,18 +17,22 @@ const SpeedTestResults = () => {
 
   const fetchSpeedTestResults = async () => {
     try {
-      // Make API call to fetch speed test results
-      const response = await axios.get('/speed-test/stop');
-      setSpeedTestResults(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching speed test results:', error);
-      setLoading(false);
-    }
+        // Make API call to fetch speed test results
+        const response = await axios.get('/speed-test/stop');
+        setSpeedTestResults(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching speed test results:', error);
+        setLoading(false);
+      }
   };
   const handleEndSpeedTest = async () => {
-        
-
+        try {
+          const response = await axios.get('http://localhost:8000/speed-test/stop');
+          console.log(response.data);
+        } catch (error) {
+          console.error('Error stopping speed test:', error);
+        }
   };
 
   return (
