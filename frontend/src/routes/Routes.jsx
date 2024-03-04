@@ -8,6 +8,10 @@ import Login from "../pages/Login.jsx";
 import PageNotFound from "../pages/PageNotFound.jsx";
 import LandingPage from "../pages/LandingPage.jsx";
 import PrivateRoutes from "./PrivateRoutes.jsx";
+import SpeedTestInterface from "../pages/SpeedTestInterface.jsx";
+import SpeedTestResults from "../pages/SpeedTestResults.jsx";
+
+
 
 const AppRoutes = () => {
   const { currentUser } = useContext(UserContext);
@@ -37,6 +41,8 @@ const AppRoutes = () => {
           />
         </Route>
       </Route>
+      <Route path="/speed-test-interface" element={<SpeedTestInterface />} />
+      <Route path="/speed-test-results" element={<SpeedTestResults />} />
       <Route path="/welcome" element={<LandingPage key="welcome-content" />} />
       <Route
         path="/login"

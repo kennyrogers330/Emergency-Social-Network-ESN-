@@ -12,6 +12,7 @@ import api from '../utils/api';
 import { UserContext } from '../context/UserContext.jsx'
 import { useContext } from 'react';
 import ExistingUsersContext from '../context/ExistingUsersContext.jsx';
+import { FaTachometerAlt} from 'react-icons/fa';
 
 
 
@@ -44,7 +45,29 @@ const Sidebar = () => {
     updateStatus(status);
     setDropdownVisible(false);
     updateUserHealthStatus(userData.username, status)
+  }
+  
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    input1: '',
+    input2: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
   };
+
+  const handleSubmit = () => {
+    // Your form submission logic goes here
+    console.log(formData);
+  }; 
+  const toggleForm = () => {
+    setShowForm(!showForm);
+  };  
 
   const menuItems = [
     {
@@ -128,7 +151,15 @@ const Sidebar = () => {
       ),
     },
     
-
+    {
+      path: '/speed-test-interface', // Define the path for the Speed Test Interface icon
+      name: 'home', // Define the name for the Speed Test Interface icon
+      icon: (
+        <Link to="/speed-test-interface" className="flex justify-center p-3 hover:bg-[#94acf9]">
+          <FaTachometerAlt size={24} />
+        </Link>
+      ),
+    }, 
 
   ];
   return (
