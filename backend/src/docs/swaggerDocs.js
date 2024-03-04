@@ -86,8 +86,10 @@
  *      SpeedTest:
  *        type: object
  *        properties:      
- *          testPayload:
- *            type: string
+ *          interval:
+ *            type:integer
+ *          duration:
+ *            type:integer
  *      SpeedTestResponse:
  *        type: object
  *        properties:
