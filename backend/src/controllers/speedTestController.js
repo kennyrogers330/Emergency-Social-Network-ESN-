@@ -81,6 +81,7 @@ const startSpeedTest = async (req, res) => {
     const token = getJwtToken(user._id);
 
     const { duration, interval } = req.body;
+
     testStartTime = new Date();
     speedTestMiddleware.startSpeedTest(); // Start speed test using middleware
     let elapsedTime = 0; // Initialize elapsed time
@@ -128,8 +129,8 @@ const startSpeedTest = async (req, res) => {
       // // Return response with counts
       res.status(200).json({
         message: "Speed test performed successfully.",
-        postRequestsPerSecond: postRequestsCompleted / totalTime,
-        GetRequestsPerSecond: getRequestsCompleted / totalTime,
+        postRequestsPerSecond: (postRequestsCompleted / totalTime).toFixed(2),
+        GetRequestsPerSecond: (getRequestsCompleted / totalTime).toFixed(2),
       });
 
       postRequestsCompleted = 0;
@@ -186,10 +187,11 @@ const terminateTest = async (req, res) => {
   try {
     continueSpeedTest = false;
     await tearDown();
-    res.status(200).json({ message: "Speed test terminated Gracefully." });
+    res.status(200).json({ stop_message: "Speed test terminated Gracefully." });
   } catch (error) {
-    res.status(400).json({ message: "Error terminating the speed test." });
+    res.status(400).json({ stop_message: "Error terminating the speed test." });
   }
+  continueSpeedTest = true;
 };
 
 // Define variables
